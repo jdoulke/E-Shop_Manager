@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Προσθήκη Πελάτη"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_margin="24dp"/>
+
+    <EditText
+        android:id="@+id/client_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Client ID / Αναγνωριστικό πελάτη"/>
+
+    <EditText
+        android:id="@+id/client_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Όνομα πελάτη" />
+
+    <EditText
+        android:id="@+id/client_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Επίθετο πελάτη" />
+
+    <EditText
+        android:id="@+id/client_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="Κινητό πελάτη" />
+
+    <Button
+        android:id="@+id/client_fragment_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        android:text="Προσθήκη Πελάτη"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp" />
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Αφαίρεση Πελάτη"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_margin="24dp"/>
+
+    <EditText
+        android:id="@+id/client_delete_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Εισάγεται Client ID/ Αναγνωριστικό πελάτη"/>
+
+    <Button
+        android:id="@+id/client_fragment_remove_button"
+        android:background="@drawable/buttons_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Αφαίρεση Πελάτη"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

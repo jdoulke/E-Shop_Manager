@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="24dp"
+        android:text="Αναζήτηση Πελάτη"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/client_search_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Εισάγεται Client ID/ Αναγνωριστικό πελάτη"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/client_search_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Εισάγεται το κινητό του πελάτη"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/client_fragment_search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/buttons_background"
+        android:text="Αναζήτηση Πελάτη" />
+
+    <TextView
+        android:id="@+id/client_search_id_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Αναγνωριστικό:"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/client_search_name_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Πελάτης:"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/client_search_phone_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Κινητό:"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/client_search_date_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ημ/νία Εγγραφής:"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
