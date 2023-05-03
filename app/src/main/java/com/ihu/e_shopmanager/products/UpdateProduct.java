@@ -1,5 +1,6 @@
 package com.ihu.e_shopmanager.products;
 
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -17,9 +18,10 @@ import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
-import com.ihu.e_shopmanager.clients.Client;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class UpdateProduct extends Fragment {
@@ -42,6 +44,10 @@ public class UpdateProduct extends Fragment {
         product_stock = view.findViewById(R.id.product_update_stock);
         product_price = view.findViewById(R.id.product_update_price);
         List<Product> products = MainActivity.myAppDatabase.myDao().getProducts();
+        Map<Integer, Product> productMap = new HashMap<>();
+        for (Product product : products) {
+            productMap.put(product.getId(), product);
+        }
 
         product_id.addTextChangedListener(new TextWatcher() {
             @Override
@@ -57,75 +63,85 @@ public class UpdateProduct extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Product product = new Product();
-                for (Product i : products) {
-                    int code = i.getId();
-                    if (s.toString().equals(String.valueOf(code))) {
-                        product = i;
-                        break;
-                    }
-                }
+                if (s.toString().isEmpty()) {
 
-                // Populate the other EditTexts with the customer details
-                product_name.setText(product.getName());
-                product_category.setText(product.getCategory());
-                if(product.getStock() != 0)
-                    product_stock.setText(String.valueOf(product.getStock()));
-                else
+                    product_name.setText("");
+                    product_category.setText("");
                     product_stock.setText("");
-                if(product.getPrice() != 0)
-                    product_price.setText(String.valueOf(product.getPrice()));
-                else
                     product_price.setText("");
+
+                } else {
+                    Integer productId = parseInt(s.toString());
+                    Product product = productMap.get(productId);
+
+                    if(product == null) {
+                        product_name.setText("");
+                        product_category.setText("");
+                        product_stock.setText("");
+                        product_price.setText("");
+                        return;
+                    }
+
+                    product_name.setText(product.getName());
+                    product_category.setText(product.getCategory());
+                    if (product.getStock() != 0)
+                        product_stock.setText(String.valueOf(product.getStock()));
+                    else
+                        product_stock.setText("");
+                    if (product.getPrice() != 0)
+                        product_price.setText(String.valueOf(product.getPrice()));
+                    else
+                        product_price.setText("");
+                }
             }
         });
         button = view.findViewById(R.id.product_update_button);
         button.setOnClickListener(v -> {
+
             Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = 0;
+
             try {
-                id = Integer.parseInt(product_id.getText().toString());
-            } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
-            }
-            Product product = new Product();
-            String name, category;
-            name = product_name.getText().toString();
-            category = product_category.getText().toString();
-            float price = 0;
-            try {
-                price = Float.parseFloat(product_price.getText().toString());
-            } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
-            }
-            int stock = 0;
-            try {
-                stock = Integer.parseInt(product_stock.getText().toString());
-            } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
-            }
-            try {
+
+                int id = parseInt(product_id.getText().toString());
+                String name = product_name.getText().toString();
+                String category = product_category.getText().toString();
+                float price = Float.parseFloat(product_price.getText().toString());
+                int stock = parseInt(product_stock.getText().toString());
+
+                Product product = new Product();
                 product.setPrice(price);
                 product.setStock(stock);
                 product.setId(id);
                 product.setName(name);
                 product.setCategory(category);
+
                 MainActivity.myAppDatabase.myDao().updateProduct(product);
+
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
                 Toast.makeText(getActivity(),"Τα στοιχεία ενημερώθηκαν",Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 String message = e.getMessage();
                 Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
             }
-            product_id.setText("");
-            product_name.setText("");
-            product_stock.setText("");
-            product_category.setText("");
-            product_price.setText("");
+                product_id.setText("");
+                product_name.setText("");
+                product_stock.setText("");
+                product_category.setText("");
+                product_price.setText("");
         });
         return view;
+    }
+
+    private static int parseInt(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException ex) {
+            System.out.println("Could not parse " + ex);
+            return 0;
+        }
     }
 
 }

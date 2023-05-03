@@ -24,6 +24,7 @@ import com.ihu.e_shopmanager.products.Product;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -46,7 +47,12 @@ public class UpdateClient extends Fragment {
         client_lastname = view.findViewById(R.id.client_update_lastname);
         client_phone_number = view.findViewById(R.id.client_update_phone);
         client_date = view.findViewById(R.id.client_update_date);
+
         List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
+        HashMap<Integer, Client> clientMap = new HashMap<>();
+        for (Client client : clients)
+            clientMap.put(client.getId(), client);
+
         client_id.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,54 +67,48 @@ public class UpdateClient extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Client client = new Client();
-                for (Client i : clients) {
-                    int code = i.getId();
-                    if (s.toString().equals(String.valueOf(code))) {
-                        client = i;
-                        break;
-                    }
-                }
+                if (s.toString().isEmpty()) {
 
-                // Populate the other EditTexts with the customer details
-                client_name.setText(client.getName());
-                client_lastname.setText(client.getLastname());
-                if(client.getPhone_number() != 0)
-                    client_phone_number.setText(String.valueOf(client.getPhone_number()));
-                else
+                    client_name.setText("");
+                    client_lastname.setText("");
                     client_phone_number.setText("");
-                client_date.setText(client.getRegisteration_date());
+                    client_date.setText("");
+
+                } else {
+                    int id = parseInt(s.toString());
+                    Client client = clientMap.get(id);
+
+                    if(client == null){
+                        client_name.setText("");
+                        client_lastname.setText("");
+                        client_phone_number.setText("");
+                        client_date.setText("");
+                        return;
+                    }
+
+                    client_name.setText(client.getName());
+                    client_lastname.setText(client.getLastname());
+                    if (client.getPhone_number() != 0)
+                        client_phone_number.setText(String.valueOf(client.getPhone_number()));
+                    else
+                        client_phone_number.setText("");
+                    client_date.setText(client.getRegisteration_date());
+                }
             }
         });
 
         button = view.findViewById(R.id.client_update_button);
         button.setOnClickListener(v -> {
+
             Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = 0;
-            try {
-                id = Integer.parseInt(client_id.getText().toString());
-            } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
-            }
-            String name, lastname;
-            name = client_name.getText().toString();
-            lastname = client_lastname.getText().toString();
-            long phone_number = 0;
-            try {
-                phone_number = Long.parseLong(client_phone_number.getText().toString());
-            } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
-            }
-            String date = "";
-            try {
-                String dateString = client_date.getText().toString();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date selectedDate = dateFormat.parse(dateString);
-                date = dateFormat.format(selectedDate);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            String name = client_name.getText().toString();
+            String lastname = client_lastname.getText().toString();
+            int id = parseInt(client_id.getText().toString());
+            long phone_number = parseLong(client_phone_number.getText().toString());
+            String date = formatDate(client_date.getText().toString());
+
             try {
                 Client client = new Client();
                 client.setId(id);
@@ -131,6 +131,35 @@ public class UpdateClient extends Fragment {
             client_date.setText("");
         });
         return view;
+    }
+
+    private static int parseInt(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException ex) {
+            System.out.println("Could not parse " + ex);
+            return 0;
+        }
+    }
+
+    private static long parseLong(String s) {
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException ex) {
+            System.out.println("Could not parse " + ex);
+            return 0;
+        }
+    }
+
+    private static String formatDate(String s) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date selectedDate = dateFormat.parse(s);
+            return dateFormat.format(selectedDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
 
