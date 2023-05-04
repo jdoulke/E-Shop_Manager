@@ -1,6 +1,7 @@
 package com.ihu.e_shopmanager.clients;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,8 +9,7 @@ import androidx.room.PrimaryKey;
 @Entity (tableName = "client")
 public class Client {
 
-
-    @PrimaryKey @ColumnInfo (name = "client_id")
+    @PrimaryKey @ColumnInfo (name = "client_id") @NonNull
     private int id;
 
     @ColumnInfo (name = "name")

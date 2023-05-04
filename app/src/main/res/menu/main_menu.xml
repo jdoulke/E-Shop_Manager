@@ -9,7 +9,7 @@
 
         <item
             android:id="@+id/orders"
-            android:icon="@drawable/orders_icon"
+            android:icon="@drawable/order_icon"
             android:title="Παραγγελίες"/>
         <item
             android:id="@+id/clients"

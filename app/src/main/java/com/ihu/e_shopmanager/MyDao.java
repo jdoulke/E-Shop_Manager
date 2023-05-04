@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.ihu.e_shopmanager.clients.Client;
+import com.ihu.e_shopmanager.orders.Order;
 import com.ihu.e_shopmanager.products.Product;
 
 import java.util.List;
@@ -25,7 +26,6 @@ public interface MyDao {
     void deleteProduct(Product product);
     @Update
     void updateClient(Client client);
-
     @Update
     void updateProduct(Product product);
     @Query("select * from Client")
@@ -33,5 +33,11 @@ public interface MyDao {
 
     @Query("select * from Product")
     List<Product> getProducts();
+
+    @Query("SELECT * FROM Product WHERE category = :category")
+    List<Product> getProductsInCategory(String category);
+
+
+
 
 }

@@ -24,8 +24,6 @@ import java.util.List;
 public class ClientsFragment extends Fragment implements View.OnClickListener {
 
     Button addClient, removeClient, editClient, searchClient;
-    private ScrollView mScrollView;
-    private LinearLayout mLinearLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,8 +38,7 @@ public class ClientsFragment extends Fragment implements View.OnClickListener {
         searchClient = view.findViewById(R.id.client_search_button);
         searchClient.setOnClickListener(this);
 
-        mScrollView = view.findViewById(R.id.clients_scrollview);
-        mLinearLayout = view.findViewById(R.id.clients_linearlayout);
+        LinearLayout mLinearLayout = view.findViewById(R.id.clients_linearlayout);
 
         // Get clients from database
         List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
