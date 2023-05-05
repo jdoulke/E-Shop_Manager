@@ -19,6 +19,8 @@ public interface MyDao {
     void insertClient(Client client);
     @Insert
     void insertProduct(Product product);
+    @Insert
+    void insertOrder(Order order);
 
     @Delete
     void deleteClient(Client client);
@@ -33,6 +35,9 @@ public interface MyDao {
 
     @Query("select * from Product")
     List<Product> getProducts();
+
+    @Query("select * from `order`")
+    List<Order> getOrders();
 
     @Query("SELECT * FROM Product WHERE category = :category")
     List<Product> getProductsInCategory(String category);

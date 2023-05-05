@@ -40,8 +40,6 @@ public class Order {
         return products;
     }
 
-    @Ignore
-    private Client client;
 
     public void setProducts(List<ProductWithQuantity> products) {
         this.products = products;
@@ -83,13 +81,6 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
 }
 

@@ -44,7 +44,6 @@
             android:id="@+id/order_category_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="Κατηγορία προϊόντος"
             android:layout_margin="10dp"/>
 
         <TextView
@@ -59,7 +58,6 @@
             android:id="@+id/order_product_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="Προϊόν"
             android:layout_margin="10dp"/>
 
         <EditText
@@ -80,6 +78,7 @@
             android:layout_marginTop="10dp" />
 
         <TextView
+            android:id="@+id/order_client_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Πελάτης: "
@@ -108,6 +107,15 @@
                 </LinearLayout>
         </ScrollView>
 
+        <TextView
+            android:id="@+id/order_total_price_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Σύνολο: 0€"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="0dp"/>
+
         <Button
             android:id="@+id/order_insert_button"
             android:layout_width="wrap_content"
@@ -115,6 +123,6 @@
             android:background="@drawable/buttons_background"
             android:text="Υποβολή Παραγγελίας"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="20dp" />
 
 </LinearLayout>
