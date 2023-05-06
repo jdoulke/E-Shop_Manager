@@ -41,6 +41,7 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
+
     <TextView
         android:id="@+id/product_search_name_view"
         android:layout_width="match_parent"
@@ -49,7 +50,6 @@
         android:text="Προϊόν:"
         android:textSize="20sp"
         android:textStyle="bold" />
-
 
     <TextView
         android:id="@+id/product_search_category_view"

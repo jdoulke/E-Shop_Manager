@@ -36,6 +36,10 @@ public class Order {
     @ColumnInfo(name = "total_price")
     private float totalPrice;
 
+    @ColumnInfo(name = "products")
+    private List<ProductWithQuantity> products;
+
+
     public List<ProductWithQuantity> getProducts() {
         return products;
     }
@@ -44,10 +48,6 @@ public class Order {
     public void setProducts(List<ProductWithQuantity> products) {
         this.products = products;
     }
-
-    @ColumnInfo(name = "products")
-    private List<ProductWithQuantity> products;
-
 
     public int getId() {
         return id;

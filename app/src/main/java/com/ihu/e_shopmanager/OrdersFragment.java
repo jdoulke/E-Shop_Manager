@@ -18,6 +18,7 @@ import com.ihu.e_shopmanager.clients.SearchClient;
 import com.ihu.e_shopmanager.clients.UpdateClient;
 import com.ihu.e_shopmanager.orders.InsertOrder;
 import com.ihu.e_shopmanager.orders.Order;
+import com.ihu.e_shopmanager.orders.SearchOrder;
 import com.ihu.e_shopmanager.products.Product;
 
 import java.util.HashMap;
@@ -66,7 +67,6 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
         priceTextView.setText("Αξία");
         dateTextView.setText("Ημ/νια Παραγγελίας");
         mLinearLayout.addView(headerView);
-
         // Inflate client_item.xml for each client and add them to LinearLayout
         for (Order order : orders) {
             View productView = inflater.inflate(R.layout.order_list_item, null);
@@ -78,7 +78,8 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
             idTextView.setText(String.valueOf(order.getId()));
             Client client = clientMap.get(order.getClientId());
             clientNameTextView.setText(client.getName() + " " + client.getLastname());
-            priceTextView.setText(String.valueOf(order.getTotalPrice()));
+            String formattedPrice = String.format("%.2f", order.getTotalPrice());
+            priceTextView.setText(formattedPrice);
             dateTextView.setText(String.valueOf(order.getOrderDate()));
 
             mLinearLayout.addView(productView);
@@ -97,7 +98,7 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
         else if (v.getId() == R.id.order_edit_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new DeleteClient()).addToBackStack(null).commit();
         else if (v.getId() == R.id.order_search_button)
-            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new UpdateClient()).addToBackStack(null).commit();
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchOrder()).addToBackStack(null).commit();
         else if (v.getId() == R.id.order_finish_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchClient()).addToBackStack(null).commit();
 
