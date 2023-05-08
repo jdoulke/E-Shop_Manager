@@ -38,7 +38,7 @@ public class CompletionOfOrder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.order_delete_fragment, container, false);
+        View view = inflater.inflate(R.layout.order_complilation, container, false);
 
         List<Order> orders = MainActivity.myAppDatabase.myDao().getOrders();
 
@@ -56,16 +56,16 @@ public class CompletionOfOrder extends Fragment {
 
     private void registerListeners(View view) {
 
-        EditText order_search_order_id = view.findViewById(R.id.order_edit_order_id);
+        EditText order_finish_order_id = view.findViewById(R.id.order_finish_order_id);
 
-        TextView order_client_view = view.findViewById(R.id.order_edit_client_view);
-        TextView dateView = view.findViewById(R.id.order_edit_date_view);
-        TextView order_id_view = view.findViewById(R.id.order_edit_id_view);
-        TextView order_total_price_view = view.findViewById(R.id.order_edit_price_view);
+        TextView order_client_view = view.findViewById(R.id.order_finish_client_view);
+        TextView dateView = view.findViewById(R.id.order_finish_date_view);
+        TextView order_id_view = view.findViewById(R.id.order_finish_id_view);
+        TextView order_total_price_view = view.findViewById(R.id.order_finish_price_view);
 
-        Button finishButton = view.findViewById(R.id.order_delete_button);
+        Button finishButton = view.findViewById(R.id.order_finish_button);
 
-        order_search_order_id.addTextChangedListener(new TextWatcher() {
+        order_finish_order_id.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // Do nothing
@@ -121,7 +121,7 @@ public class CompletionOfOrder extends Fragment {
             Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
-            int id = parseInt(order_search_order_id.getText().toString());
+            int id = parseInt(order_finish_order_id.getText().toString());
             Order order = orderMap.get(id);
             if(order != null) {
                 try {
@@ -130,9 +130,11 @@ public class CompletionOfOrder extends Fragment {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     String formattedDate = dateFormat.format(currentDate);
                     sale.setSale_date(formattedDate);
-                    sale.setOrder(order);
+                    sale.setProductsList(order.getProducts());
+                    sale.setOrder_date(order.getOrderDate());
                     sale.setClient_id(order.getClientId());
-                    sale.setValue(sale.getValue());
+                    sale.setValue(order.getTotalPrice());
+                    sale.setSale_id(order.getId());
                     MainActivity.firestoreDatabase.collection("Sales").
                             document(""+order.getId()).
                             set(sale).addOnCompleteListener(task -> {

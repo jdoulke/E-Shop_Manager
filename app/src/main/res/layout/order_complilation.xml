@@ -17,7 +17,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/order_edit_order_id"
+        android:id="@+id/order_finish_order_id"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"
@@ -26,7 +26,7 @@
 
 
     <TextView
-        android:id="@+id/order_edit_client_view"
+        android:id="@+id/order_finish_client_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -35,7 +35,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/order_edit_id_view"
+        android:id="@+id/order_finish_id_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -44,7 +44,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/order_edit_date_view"
+        android:id="@+id/order_finish_date_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -56,7 +56,7 @@
 
 
     <TextView
-        android:id="@+id/order_edit_price_view"
+        android:id="@+id/order_finish_price_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -65,7 +65,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/order_delete_button"
+        android:id="@+id/order_finish_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -101,7 +101,7 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
         else if (v.getId() == R.id.order_search_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchOrder()).addToBackStack(null).commit();
         else if (v.getId() == R.id.order_finish_button)
-            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchClient()).addToBackStack(null).commit();
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new CompletionOfOrder()).addToBackStack(null).commit();
 
     }
 }

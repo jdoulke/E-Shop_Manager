@@ -21,6 +21,7 @@ import com.ihu.e_shopmanager.clients.ClientsFragment;
 import com.ihu.e_shopmanager.databases.EshopDatabase;
 import com.ihu.e_shopmanager.orders.OrdersFragment;
 import com.ihu.e_shopmanager.products.ProductsFragment;
+import com.ihu.e_shopmanager.sales.SalesFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     ClientsFragment clientsFragment = new ClientsFragment();
     OrdersFragment ordersFragment = new OrdersFragment();
     ProductsFragment productsFragment = new ProductsFragment();
+    SalesFragment salesFragment = new SalesFragment();
     HomeFragment homeFragment = new HomeFragment();
 
     @Override
@@ -105,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
                 transaction.addToBackStack(null);
                 transaction.commit();
                 toolbarTitle.setText("Προϊόντα");
+                drawerLayout.closeDrawers();
+            }else if(itemId == R.id.sales){
+                transaction.replace(R.id.fragment_container, salesFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                toolbarTitle.setText("Πωλήσεις");
                 drawerLayout.closeDrawers();
             }
             return false;
