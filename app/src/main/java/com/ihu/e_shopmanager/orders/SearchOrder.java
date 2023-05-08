@@ -1,6 +1,7 @@
 package com.ihu.e_shopmanager.orders;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -49,7 +50,15 @@ public class SearchOrder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.order_search_fragment, container, false);
+        int orientation = getResources().getConfiguration().orientation;
+
+        View view;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            view = inflater.inflate(R.layout.order_search_fragment, container, false);
+        } else {
+            view = inflater.inflate(R.layout.order_search_landscape_fragment, container, false);
+        }
+
 
         EditText order_search_order_id = view.findViewById(R.id.order_search_order_id);
         EditText order_search_client_id = view.findViewById(R.id.order_search_client_id);
