@@ -61,7 +61,7 @@ public class DeleteOrder extends Fragment {
         TextView order_id_view = view.findViewById(R.id.order_edit_id_view);
         TextView order_total_price_view = view.findViewById(R.id.order_edit_price_view);
 
-        Button removeButton = view.findViewById(R.id.order_edit_button);
+        Button removeButton = view.findViewById(R.id.order_delete_button);
 
         order_search_order_id.addTextChangedListener(new TextWatcher() {
             @Override
@@ -79,36 +79,36 @@ public class DeleteOrder extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
-                    order_client_view.setText("Πελάτης: ");
-                    dateView.setText("Ημερομηνία Παραγγελίας: ");
-                    order_id_view.setText("Παραγγελία: ");
-                    order_total_price_view.setText("Σύνολο: 0€");
+                    order_client_view.setText(" Πελάτης: ");
+                    dateView.setText(" Ημερομηνία Παραγγελίας: ");
+                    order_id_view.setText(" Παραγγελία: ");
+                    order_total_price_view.setText(" Σύνολο: 0€");
                 } else {
                     int orderID = parseInt(s.toString());
                     Order order = orderMap.get(orderID);
 
                     if (order == null) {
-                        order_client_view.setText("Πελάτης: ");
-                        dateView.setText("Ημερομηνία Παραγγελίας: ");
-                        order_id_view.setText("Παραγγελία: ");
-                        order_total_price_view.setText("Σύνολο: 0€");
+                        order_client_view.setText(" Πελάτης: ");
+                        dateView.setText(" Ημερομηνία Παραγγελίας: ");
+                        order_id_view.setText(" Παραγγελία: ");
+                        order_total_price_view.setText(" Σύνολο: 0€");
                         return;
                     }
 
                     Client client = MainActivity.myAppDatabase.myDao().getClientFromOrder(orderID);
                     if (client == null) {
-                        order_client_view.setText("Πελάτης: ");
-                        dateView.setText("Ημερομηνία Παραγγελίας: ");
-                        order_id_view.setText("Παραγγελία: ");
-                        order_total_price_view.setText("Σύνολο: 0€");
+                        order_client_view.setText(" Πελάτης: ");
+                        dateView.setText(" Ημερομηνία Παραγγελίας: ");
+                        order_id_view.setText(" Παραγγελία: ");
+                        order_total_price_view.setText(" Σύνολο: 0€");
                         return;
                     }
 
-                    order_client_view.setText("Πελάτης: " + client.getName() + " " + client.getLastname());
-                    dateView.setText("Ημερομηνία Παραγγελίας: " + order.getOrderDate());
-                    order_id_view.setText("Παραγγελία: " + orderID);
+                    order_client_view.setText(" Πελάτης: " + client.getName() + " " + client.getLastname());
+                    dateView.setText(" Ημερομηνία Παραγγελίας: " + order.getOrderDate());
+                    order_id_view.setText(" Παραγγελία: " + orderID);
                     String formattedPrice = String.format("%.2f", order.getTotalPrice());
-                    order_total_price_view.setText("Σύνολο: " + formattedPrice + "€");
+                    order_total_price_view.setText(" Σύνολο: " + formattedPrice + "€");
 
                 }
 
@@ -121,17 +121,19 @@ public class DeleteOrder extends Fragment {
 
             int id = parseInt(order_search_order_id.getText().toString());
             Order order = orderMap.get(id);
-            MainActivity.myAppDatabase.myDao().deleteOrder(order);
+            if(order != null) {
+                MainActivity.myAppDatabase.myDao().deleteOrder(order);
+                Toast.makeText(getActivity(), "Η παραγγελία αφαιρέθηκε ", Toast.LENGTH_LONG).show();
+            }else
+                Toast.makeText(getActivity(), "Δε βρέθηκε παραγγελία ", Toast.LENGTH_LONG).show();
 
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-            Toast.makeText(getActivity(),"Η παραγγελία αφαιρέθηκε ",Toast.LENGTH_LONG).show();
-
-            order_client_view.setText("Πελάτης: ");
-            dateView.setText("Ημερομηνία Παραγγελίας: ");
-            order_id_view.setText("Παραγγελία: ");
-            order_total_price_view.setText("Σύνολο: 0€");
+            order_client_view.setText(" Πελάτης: ");
+            dateView.setText(" Ημερομηνία Παραγγελίας: ");
+            order_id_view.setText(" Παραγγελία: ");
+            order_total_price_view.setText(" Σύνολο: 0€");
         });
 
 
@@ -143,7 +145,7 @@ public class DeleteOrder extends Fragment {
             return Integer.parseInt(s);
         } catch (NumberFormatException ex) {
             System.out.println("Could not parse " + ex);
-            return 0;
+            return -1;
         }
     }
 
