@@ -11,11 +11,13 @@ import androidx.room.Room;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static EshopDatabase myAppDatabase;
 
-
+    public static FirebaseFirestore firestoreDatabase;
     public static FragmentManager fragmentManager;
     ClientsFragment clientsFragment = new ClientsFragment();
     OrdersFragment ordersFragment = new OrdersFragment();
@@ -42,13 +44,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Init(){
+
         fragmentManager = getSupportFragmentManager();
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close );
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+
+        firestoreDatabase = FirebaseFirestore.getInstance();
         myAppDatabase = Room.databaseBuilder(getApplicationContext(),EshopDatabase.class,"eshopDB").allowMainThreadQueries().build();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         TextView toolbarText = findViewById(R.id.toolbar_string);
         toolbarText.setText("Αρχική");
         registerListeners();
+
     }
 
     private void registerListeners() {
