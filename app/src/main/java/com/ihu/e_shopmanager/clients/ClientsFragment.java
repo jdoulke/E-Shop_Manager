@@ -1,4 +1,4 @@
-package com.ihu.e_shopmanager;
+package com.ihu.e_shopmanager.clients;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.ihu.e_shopmanager.MainActivity;
+import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
 import com.ihu.e_shopmanager.clients.DeleteClient;
 import com.ihu.e_shopmanager.clients.InsertClient;

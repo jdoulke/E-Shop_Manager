@@ -1,4 +1,4 @@
-package com.ihu.e_shopmanager;
+package com.ihu.e_shopmanager.databases;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

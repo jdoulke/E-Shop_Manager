@@ -11,13 +11,16 @@ import androidx.room.Room;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.ihu.e_shopmanager.clients.ClientsFragment;
+import com.ihu.e_shopmanager.databases.EshopDatabase;
+import com.ihu.e_shopmanager.orders.OrdersFragment;
+import com.ihu.e_shopmanager.products.ProductsFragment;
 
 
 public class MainActivity extends AppCompatActivity {

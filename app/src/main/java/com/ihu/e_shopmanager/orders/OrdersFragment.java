@@ -1,4 +1,4 @@
-package com.ihu.e_shopmanager;
+package com.ihu.e_shopmanager.orders;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.ihu.e_shopmanager.MainActivity;
+import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
 import com.ihu.e_shopmanager.clients.SearchClient;
 import com.ihu.e_shopmanager.orders.DeleteOrder;
@@ -78,7 +80,7 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
             Client client = clientMap.get(order.getClientId());
             clientNameTextView.setText(client.getName() + " " + client.getLastname());
             String formattedPrice = String.format("%.2f", order.getTotalPrice());
-            priceTextView.setText(formattedPrice);
+            priceTextView.setText(formattedPrice + "€");
             dateTextView.setText(String.valueOf(order.getOrderDate()));
 
             mLinearLayout.addView(productView);

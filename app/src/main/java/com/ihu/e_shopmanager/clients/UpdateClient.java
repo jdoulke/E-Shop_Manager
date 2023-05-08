@@ -1,7 +1,6 @@
 package com.ihu.e_shopmanager.clients;
 
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -16,10 +15,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.ihu.e_shopmanager.ClientsFragment;
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
-import com.ihu.e_shopmanager.products.Product;
 
 
 import java.text.SimpleDateFormat;
