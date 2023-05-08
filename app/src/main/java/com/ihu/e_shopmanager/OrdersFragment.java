@@ -13,9 +13,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.clients.Client;
-import com.ihu.e_shopmanager.clients.DeleteClient;
 import com.ihu.e_shopmanager.clients.SearchClient;
-import com.ihu.e_shopmanager.clients.UpdateClient;
+import com.ihu.e_shopmanager.orders.DeleteOrder;
 import com.ihu.e_shopmanager.orders.InsertOrder;
 import com.ihu.e_shopmanager.orders.Order;
 import com.ihu.e_shopmanager.orders.SearchOrder;
@@ -96,7 +95,7 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.order_add_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new InsertOrder()).addToBackStack(null).commit();
         else if (v.getId() == R.id.order_edit_button)
-            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new DeleteClient()).addToBackStack(null).commit();
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new DeleteOrder()).addToBackStack(null).commit();
         else if (v.getId() == R.id.order_search_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchOrder()).addToBackStack(null).commit();
         else if (v.getId() == R.id.order_finish_button)

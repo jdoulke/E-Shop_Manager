@@ -73,6 +73,15 @@
         android:layout_margin="10dp"/>
 
     <TextView
+        android:id="@+id/order_search_date_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text=" Ημερομηνία Παραγγελίας: "
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Λίστα Προϊόντων"

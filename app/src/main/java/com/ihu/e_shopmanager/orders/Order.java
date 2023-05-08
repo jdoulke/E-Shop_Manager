@@ -39,11 +39,9 @@ public class Order {
     @ColumnInfo(name = "products")
     private List<ProductWithQuantity> products;
 
-
     public List<ProductWithQuantity> getProducts() {
         return products;
     }
-
 
     public void setProducts(List<ProductWithQuantity> products) {
         this.products = products;
