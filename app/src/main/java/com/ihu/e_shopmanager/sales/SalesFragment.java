@@ -11,21 +11,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
-import com.ihu.e_shopmanager.orders.CompletionOfOrder;
 import com.ihu.e_shopmanager.orders.DeleteOrder;
 import com.ihu.e_shopmanager.orders.InsertOrder;
-import com.ihu.e_shopmanager.orders.Order;
 import com.ihu.e_shopmanager.orders.ProductWithQuantity;
-import com.ihu.e_shopmanager.orders.SearchOrder;
 import com.ihu.e_shopmanager.products.Product;
 
 import java.util.ArrayList;
@@ -100,8 +97,11 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
                     sale.setOrder_date(orderDate);
                     sale.setSale_date(saleDate);
                     sales.add(sale);
+
                 }
+
             }
+
             for (Client client : clients)
                 clientMap.put(client.getId(), client);
 
@@ -135,6 +135,7 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
             }
             String formattedPrice = String.format("%.2f", totalPrice);
             total_sales.setText("Σύνολο Πωλήσεων: " + formattedPrice + "€");
+            Toast.makeText(getActivity(),"Φορτώθηκαν τα δεδομένα",Toast.LENGTH_LONG).show();
         }).addOnFailureListener(e -> {
             Log.d("FireStore ERROR: ", e.getMessage());
         });
@@ -148,14 +149,10 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
 
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(40);
-        if (v.getId() == R.id.order_add_button)
-            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new InsertOrder()).addToBackStack(null).commit();
-        else if (v.getId() == R.id.order_edit_button)
+        if (v.getId() == R.id.sale_search_button)
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchSale()).addToBackStack(null).commit();
+        else if (v.getId() == R.id.sale_remove_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new DeleteOrder()).addToBackStack(null).commit();
-        else if (v.getId() == R.id.order_search_button)
-            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchOrder()).addToBackStack(null).commit();
-        else if (v.getId() == R.id.order_finish_button)
-            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new CompletionOfOrder()).addToBackStack(null).commit();
 
     }
 
