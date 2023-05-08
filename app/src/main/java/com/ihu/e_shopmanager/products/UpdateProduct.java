@@ -71,7 +71,7 @@ public class UpdateProduct extends Fragment {
                     product_price.setText("");
 
                 } else {
-                    Integer productId = parseInt(s.toString());
+                    int productId = parseInt(s.toString());
                     Product product = productMap.get(productId);
 
                     if(product == null) {

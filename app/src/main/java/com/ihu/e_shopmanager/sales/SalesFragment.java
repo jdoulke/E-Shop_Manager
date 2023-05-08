@@ -20,8 +20,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
-import com.ihu.e_shopmanager.orders.DeleteOrder;
-import com.ihu.e_shopmanager.orders.InsertOrder;
 import com.ihu.e_shopmanager.orders.ProductWithQuantity;
 import com.ihu.e_shopmanager.products.Product;
 
@@ -32,7 +30,7 @@ import java.util.Map;
 
 public class SalesFragment extends Fragment implements View.OnClickListener{
 
-    Button searchSale, removeSale;
+    Button searchSale, editSale;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -41,8 +39,8 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.sales_fragment, container, false);
         searchSale = view.findViewById(R.id.sale_search_button);
         searchSale.setOnClickListener(this);
-        removeSale = view.findViewById(R.id.sale_remove_button);
-        removeSale.setOnClickListener(this);
+        editSale = view.findViewById(R.id.sale_edit_button);
+        editSale.setOnClickListener(this);
 
         TextView total_sales = view.findViewById(R.id.total_sales);
 
@@ -151,8 +149,8 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
         vibrator.vibrate(40);
         if (v.getId() == R.id.sale_search_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchSale()).addToBackStack(null).commit();
-        else if (v.getId() == R.id.sale_remove_button)
-            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new DeleteOrder()).addToBackStack(null).commit();
+        else if (v.getId() == R.id.sale_edit_button)
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new EditSale()).addToBackStack(null).commit();
 
     }
 

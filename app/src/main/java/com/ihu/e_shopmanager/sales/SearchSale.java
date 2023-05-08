@@ -259,13 +259,5 @@ public class SearchSale extends Fragment {
             return 0;
         }
     }
-    private static long parseLong(String s) {
-        try {
-            return Long.parseLong(s);
-        } catch (NumberFormatException ex) {
-            System.out.println("Could not parse " + ex);
-            return 0;
-        }
-    }
 
 }
