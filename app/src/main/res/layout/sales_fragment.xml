@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
-        android:text="Σύνολο Πωλήσεων: 0€"
+        android:text="Σύνολο Πωλήσεων: 0,00€"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"

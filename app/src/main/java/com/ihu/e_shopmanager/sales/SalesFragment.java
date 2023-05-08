@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,13 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
         removeSale = view.findViewById(R.id.sale_remove_button);
         removeSale.setOnClickListener(this);
 
+        TextView total_sales = view.findViewById(R.id.total_sales);
+
+        LinearLayout mLinearLayout = view.findViewById(R.id.sale_linearlayout);
+
         CollectionReference salesReference = MainActivity.firestoreDatabase.collection("Sales");
 
         List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
-        List<Order> orders = MainActivity.myAppDatabase.myDao().getOrders();
         List<ProductWithQuantity> products = new ArrayList<>();
         List<Sale> sales = new ArrayList<>();
 
@@ -62,11 +66,12 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
                 if (document.exists()) {
                     List<Map<String, Object>> productList = (List<Map<String, Object>>) document.get("productsList");
                     for (Map<String, Object> productMap : productList) {
-                        String category = (String) productMap.get("category");
-                        int id = ((Long) productMap.get("id")).intValue();
-                        String name = (String) productMap.get("name");
-                        float price = ((Double) productMap.get("price")).floatValue();
-                        int stock = ((Long) productMap.get("stock")).intValue();
+                        Map<String, Object> productFromFirestore = (Map<String, Object>) productMap.get("product");
+                        String category = (String) productFromFirestore.get("category");
+                        int id = ((Long) productFromFirestore.get("id")).intValue();
+                        String name = (String) productFromFirestore.get("name");
+                        float price = ((Double) productFromFirestore.get("price")).floatValue();
+                        int stock = ((Long) productFromFirestore.get("stock")).intValue();
                         int quantity = ((Long) productMap.get("quantity")).intValue();
                         Product product = new Product();
                         product.setName(name);
@@ -97,45 +102,43 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
                     sales.add(sale);
                 }
             }
+            for (Client client : clients)
+                clientMap.put(client.getId(), client);
+
+            View headerView  = inflater.inflate(R.layout.order_list_item, null);
+            TextView idTextView = headerView.findViewById(R.id.order_child_id);
+            TextView clientNameTextView = headerView.findViewById(R.id.order_child_client_name);
+            TextView priceTextView = headerView.findViewById(R.id.order_child_total_price);
+            TextView dateTextView = headerView.findViewById(R.id.order_child_date);
+            idTextView.setText("ID");
+            clientNameTextView.setText("Πελάτης");
+            priceTextView.setText("Αξία");
+            dateTextView.setText("Ημ/νια Πώλησης");
+            float totalPrice = 0;
+            mLinearLayout.addView(headerView);
+            for (Sale sale : sales) {
+                View productView = inflater.inflate(R.layout.order_list_item, null);
+                TextView idView = productView.findViewById(R.id.order_child_id);
+                TextView clientNameView = productView.findViewById(R.id.order_child_client_name);
+                TextView priceView = productView.findViewById(R.id.order_child_total_price);
+                TextView dateView = productView.findViewById(R.id.order_child_date);
+                idView.setText(String.valueOf(sale.getSale_id()));
+                Client client = clientMap.get(sale.getClient_id());
+                if(client != null) {
+                    clientNameView.setText(client.getName() + " " + client.getLastname());
+                    String formattedPrice = String.format("%.2f", sale.getValue());
+                    priceView.setText(formattedPrice + "€");
+                    dateView.setText(sale.getSale_date());
+                    totalPrice += sale.getValue();
+                }
+                mLinearLayout.addView(productView);
+            }
+            String formattedPrice = String.format("%.2f", totalPrice);
+            total_sales.setText("Σύνολο Πωλήσεων: " + formattedPrice + "€");
         }).addOnFailureListener(e -> {
-            // Handle any errors
+            Log.d("FireStore ERROR: ", e.getMessage());
         });
 
-        for (Client client : clients)
-            clientMap.put(client.getId(), client);
-
-        View headerView  = inflater.inflate(R.layout.order_list_item, null);
-        TextView idTextView = headerView.findViewById(R.id.order_child_id);
-        TextView clientNameTextView = headerView.findViewById(R.id.order_child_client_name);
-        TextView priceTextView = headerView.findViewById(R.id.order_child_total_price);
-        TextView dateTextView = headerView.findViewById(R.id.order_child_date);
-
-        LinearLayout mLinearLayout = view.findViewById(R.id.sale_linearlayout);
-
-        idTextView.setText("ID");
-        clientNameTextView.setText("Πελάτης");
-        priceTextView.setText("Αξία");
-        dateTextView.setText("Ημ/νια Πώλησης");
-        mLinearLayout.addView(headerView);
-        // Inflate client_item.xml for each client and add them to LinearLayout
-        for (Sale sale : sales) {
-            View productView = inflater.inflate(R.layout.order_list_item, null);
-            idTextView = productView.findViewById(R.id.order_child_id);
-            clientNameTextView = productView.findViewById(R.id.order_child_client_name);
-            priceTextView = productView.findViewById(R.id.order_child_total_price);
-            dateTextView = productView.findViewById(R.id.order_child_date);
-
-            idTextView.setText(String.valueOf(sale.getSale_id()));
-            Client client = clientMap.get(sale.getClient_id());
-            if(client != null) {
-                clientNameTextView.setText(client.getName() + " " + client.getLastname());
-                String formattedPrice = String.format("%.2f", sale.getValue());
-                priceTextView.setText(formattedPrice + "€");
-                dateTextView.setText(String.valueOf(sale.getSale_date()));
-            }
-
-            mLinearLayout.addView(productView);
-        }
 
         return view;
     }
