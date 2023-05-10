@@ -68,7 +68,6 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
         priceTextView.setText("Αξία");
         dateTextView.setText("Ημ/νια Παραγγελίας");
         mLinearLayout.addView(headerView);
-        // Inflate client_item.xml for each client and add them to LinearLayout
         for (Order order : orders) {
             View productView = inflater.inflate(R.layout.order_list_item, null);
             idTextView = productView.findViewById(R.id.order_child_id);

@@ -80,6 +80,19 @@ public interface MyDao {
         }
     }
 
+    @Query("Select * from `order` where `order`.order_date = '08/05/2023'")
+    List<Order> getQuery3();
 
+    @Query("Select * from `order` where `order`.total_price > 2000")
+    List<Order> getQuery4();
+
+    @Query("Select * from product where product.stock > 20")
+    List<Product> getQuery5();
+
+    @Query("Select * from product where product.category = 'Laptop'")
+    List<Product> getQuery6();
+
+    @Query("SELECT * FROM `client` WHERE client_id IN (SELECT DISTINCT client_id FROM `order` WHERE `order`.total_price > 2500)")
+    List<Client> getQuery7();
 
 }
