@@ -13,22 +13,20 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.collection.LongSparseArray;
+
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
-import com.ihu.e_shopmanager.orders.ProductWithQuantity;
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
 import com.ihu.e_shopmanager.products.Product;
 
 import java.util.ArrayList;

@@ -2,17 +2,14 @@ package com.ihu.e_shopmanager.orders;
 
 
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.ihu.e_shopmanager.clients.Client;
-import com.ihu.e_shopmanager.products.Product;
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "order",
@@ -24,10 +21,10 @@ import java.util.List;
 public class Order {
 
     @PrimaryKey
-    @ColumnInfo(name = "order_id") @NonNull
+    @ColumnInfo(name = "order_id")
     private int id;
 
-    @ColumnInfo(name = "client_id") @NonNull
+    @ColumnInfo(name = "client_id")
     private int clientId;
 
     @ColumnInfo(name = "order_date")

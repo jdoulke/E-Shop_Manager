@@ -1,6 +1,5 @@
 package com.ihu.e_shopmanager.products;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class Product {
 
     @PrimaryKey
-    @ColumnInfo(name = "product_id") @NonNull
+    @ColumnInfo(name = "product_id")
     private int id;
 
     @ColumnInfo (name = "name")

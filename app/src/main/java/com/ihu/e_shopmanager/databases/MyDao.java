@@ -9,7 +9,7 @@ import androidx.room.Update;
 
 import com.ihu.e_shopmanager.clients.Client;
 import com.ihu.e_shopmanager.orders.Order;
-import com.ihu.e_shopmanager.orders.ProductWithQuantity;
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
 import com.ihu.e_shopmanager.products.Product;
 
 import java.util.List;

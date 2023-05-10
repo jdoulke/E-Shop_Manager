@@ -1,8 +1,8 @@
 package com.ihu.e_shopmanager.sales;
 
-import com.ihu.e_shopmanager.orders.Order;
-import com.ihu.e_shopmanager.orders.ProductWithQuantity;
-import com.ihu.e_shopmanager.products.Product;
+
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
+
 
 import java.util.List;
 
@@ -10,8 +10,6 @@ public class Sale {
 
     private float value;
     private int client_id;
-
-
     private int sale_id;
     private String sale_date;
     private String order_date;

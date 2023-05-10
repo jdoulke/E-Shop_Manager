@@ -1,6 +1,5 @@
-package com.ihu.e_shopmanager.orders;
+package com.ihu.e_shopmanager.products;
 
-import com.ihu.e_shopmanager.products.Product;
 
 public class ProductWithQuantity {
 

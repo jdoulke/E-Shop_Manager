@@ -20,7 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
-import com.ihu.e_shopmanager.orders.ProductWithQuantity;
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
 import com.ihu.e_shopmanager.products.Product;
 
 import java.util.ArrayList;

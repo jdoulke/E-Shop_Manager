@@ -24,6 +24,7 @@ import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
 import com.ihu.e_shopmanager.products.Product;
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class InsertOrder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.order_insert_fragment, container, false);
+
 
         Spinner productCategorySpinner = view.findViewById(R.id.order_category_spinner);
         Spinner productSpinner = view.findViewById(R.id.order_product_spinner);
@@ -139,36 +141,42 @@ public class InsertOrder extends Fragment {
             vibrator.vibrate(40);
             String selectedProduct = productSpinner.getSelectedItem().toString();
             Product product = productHashMap.get(selectedProduct);
-            View productView = inflater.inflate(R.layout.order_item, null);
-            TextView idView = productView.findViewById(R.id.order_child_id);
-            TextView nameView = productView.findViewById(R.id.order_child_name);
-            TextView categoryView = productView.findViewById(R.id.order_child_category);
-            TextView quantityView= productView.findViewById(R.id.order_child_quantity);
-            TextView priceView= productView.findViewById(R.id.order_child_price);
-            idView.setText(String.valueOf(product.getId()));
-            nameView.setText(product.getName());
-            categoryView.setText(product.getCategory());
-            if(quantity.getText().toString().isEmpty())
-                quantityView.setText("1");
-            else
-                quantityView.setText(quantity.getText().toString());
-            priceView.setText(product.getPrice() + "€");
+            if(product.getStock() > parseInt(quantity.getText().toString())) {
+                View productView = inflater.inflate(R.layout.order_item, null);
+                TextView idView = productView.findViewById(R.id.order_child_id);
+                TextView nameView = productView.findViewById(R.id.order_child_name);
+                TextView categoryView = productView.findViewById(R.id.order_child_category);
+                TextView quantityView = productView.findViewById(R.id.order_child_quantity);
+                TextView priceView = productView.findViewById(R.id.order_child_price);
+                idView.setText(String.valueOf(product.getId()));
+                nameView.setText(product.getName());
+                categoryView.setText(product.getCategory());
+                if (quantity.getText().toString().isEmpty())
+                    quantityView.setText("1");
+                else
+                    quantityView.setText(quantity.getText().toString());
+                priceView.setText(product.getPrice() + "€");
 
-            orderLinearLayout.addView(productView);
-            ProductWithQuantity productWithQuantity = new ProductWithQuantity();
-            productWithQuantity.setProduct(product);
-            productWithQuantity.setQuantity(parseInt(quantity.getText().toString()));
-            productWithQuantities.add(productWithQuantity);
+                orderLinearLayout.addView(productView);
+                ProductWithQuantity productWithQuantity = new ProductWithQuantity();
+                productWithQuantity.setProduct(product);
+                productWithQuantity.setQuantity(parseInt(quantity.getText().toString()));
+                productWithQuantities.add(productWithQuantity);
+                Toast.makeText(getActivity(), "To προϊόν προστέθηκε.", Toast.LENGTH_LONG).show();
+                float totalPrice = 0;
+                for (ProductWithQuantity product1 : productWithQuantities) {
+                    totalPrice += product1.getQuantity() * product1.getProduct().getPrice();
+                }
+                String formattedPrice = String.format("%.2f", totalPrice);
+                totalPriceView.setText("Σύνολο: " + formattedPrice + "€");
+                product.setStock(product.getStock() - parseInt(quantity.getText().toString()));
+                MainActivity.myAppDatabase.myDao().updateProduct(product);
+            }else {
+                Toast.makeText(getActivity(), "Δεν υπάρχουν αποθέματα για αυτό το προϊόν.", Toast.LENGTH_LONG).show();
+            }
             InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            Toast.makeText(getActivity(),"To προϊόν προστέθηκε",Toast.LENGTH_LONG).show();
             quantity.setText("");
-            float totalPrice = 0;
-            for (ProductWithQuantity product1 : productWithQuantities){
-                totalPrice += product1.getQuantity() * product1.getProduct().getPrice();
-            }
-            String formattedPrice = String.format("%.2f", totalPrice);
-            totalPriceView.setText("Σύνολο: " + formattedPrice + "€");
         });
 
         addOrderButton.setOnClickListener(v -> {
@@ -193,7 +201,7 @@ public class InsertOrder extends Fragment {
                 MainActivity.myAppDatabase.myDao().insertOrder(order);
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                Toast.makeText(getActivity(),"Η παραγγελία δημιουργήθηκε",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Η παραγγελία δημιουργήθηκε.",Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 String message = e.getMessage();
                 Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();

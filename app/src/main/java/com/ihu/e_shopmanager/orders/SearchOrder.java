@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +25,12 @@ import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
 import com.ihu.e_shopmanager.products.Product;
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
 
-import org.checkerframework.checker.units.qual.C;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.zip.Inflater;
 
 public class SearchOrder extends Fragment {
 
@@ -53,11 +47,11 @@ public class SearchOrder extends Fragment {
         int orientation = getResources().getConfiguration().orientation;
 
         View view;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
             view = inflater.inflate(R.layout.order_search_fragment, container, false);
-        } else {
+        else
             view = inflater.inflate(R.layout.order_search_landscape_fragment, container, false);
-        }
+
 
 
         EditText order_search_order_id = view.findViewById(R.id.order_search_order_id);
