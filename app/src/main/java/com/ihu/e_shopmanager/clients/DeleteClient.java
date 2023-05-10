@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,10 @@ public class DeleteClient extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.clients_delete_fragment, container, false);
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Πελάτες");
+
         editText = view.findViewById(R.id.client_delete_id);
         button = view.findViewById(R.id.client_fragment_remove_button);
         button.setOnClickListener(v -> {

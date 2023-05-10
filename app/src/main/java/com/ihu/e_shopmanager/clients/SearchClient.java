@@ -30,6 +30,11 @@ public class SearchClient extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.clients_search_fragment, container, false);
+
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Πελάτες");
+
         client_search_id = view.findViewById(R.id.client_search_id);
         client_search_phone = view.findViewById(R.id.client_search_phone);
         client_search_date_view = view.findViewById(R.id.client_search_date_view);

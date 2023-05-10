@@ -52,6 +52,8 @@ public class SearchOrder extends Fragment {
         else
             view = inflater.inflate(R.layout.order_search_landscape_fragment, container, false);
 
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Παραγγελίες");
 
 
         EditText order_search_order_id = view.findViewById(R.id.order_search_order_id);

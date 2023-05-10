@@ -33,6 +33,11 @@ public class OrdersFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.orders_fragment, container, false);
+
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Παραγγελίες");
+
         addOrder = view.findViewById(R.id.order_add_button);
         addOrder.setOnClickListener(this);
         editOrder = view.findViewById(R.id.order_edit_button);

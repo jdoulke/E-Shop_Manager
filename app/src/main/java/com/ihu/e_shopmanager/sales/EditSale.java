@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -46,6 +47,11 @@ public class EditSale extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.sale_edit_fragment, container, false);
+
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Πωλήσεις");
+
         sale_id_text = view.findViewById(R.id.sale_edit_id);
         client_id_text = view.findViewById(R.id.sale_edit_client_id);
         sale_date_text = view.findViewById(R.id.sale_date_view);

@@ -26,10 +26,14 @@ public class SearchProduct extends Fragment {
     Button button;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.products_search_fragment, container, false);
+
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Προϊόντα");
+
         product_search_id = view.findViewById(R.id.product_search_id);
         product_search_id_view = view.findViewById(R.id.product_search_id_view);
         product_search_stock_view = view.findViewById(R.id.product_search_stock_view);

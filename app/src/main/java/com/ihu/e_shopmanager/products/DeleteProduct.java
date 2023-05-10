@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,11 @@ public class DeleteProduct extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.products_delete_fragment, container, false);
+
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Προϊόντα");
+
         editText = view.findViewById(R.id.product_delete_id);
         button = view.findViewById(R.id.product_remove_button);
         button.setOnClickListener(v -> {

@@ -42,6 +42,9 @@ public class SearchSale extends Fragment {
 
         View view = inflater.inflate(R.layout.sale_search_fragment, container, false);
 
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Πωλήσεις");
+
         EditText sale_search_sale_id = view.findViewById(R.id.sale_search_sale_id);
 
         TextView sale_search_price_view = view.findViewById(R.id.sale_search_price_view);

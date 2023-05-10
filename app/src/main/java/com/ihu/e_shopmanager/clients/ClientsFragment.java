@@ -31,6 +31,10 @@ public class ClientsFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.clients_fragment, container, false);
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Πελάτες");
+
         addClient = view.findViewById(R.id.client_add_button);
         addClient.setOnClickListener(this);
         removeClient = view.findViewById(R.id.client_remove_button);

@@ -42,8 +42,11 @@ public class InsertOrder extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.order_insert_fragment, container, false);
 
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Παραγγελίες");
 
         Spinner productCategorySpinner = view.findViewById(R.id.order_category_spinner);
         Spinner productSpinner = view.findViewById(R.id.order_product_spinner);

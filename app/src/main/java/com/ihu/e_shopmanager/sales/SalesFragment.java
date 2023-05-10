@@ -37,6 +37,10 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.sales_fragment, container, false);
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Πωλήσεις");
+
         searchSale = view.findViewById(R.id.sale_search_button);
         searchSale.setOnClickListener(this);
         editSale = view.findViewById(R.id.sale_edit_button);

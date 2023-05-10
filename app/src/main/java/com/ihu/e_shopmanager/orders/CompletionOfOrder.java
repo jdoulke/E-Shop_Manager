@@ -40,6 +40,9 @@ public class CompletionOfOrder extends Fragment {
 
         View view = inflater.inflate(R.layout.order_complilation, container, false);
 
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Παραγγελίες");
+
         List<Order> orders = MainActivity.myAppDatabase.myDao().getOrders();
 
 

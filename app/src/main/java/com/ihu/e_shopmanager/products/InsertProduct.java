@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,10 @@ public class InsertProduct extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.products_insert_fragment, container, false);
+
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Προϊόντα");
+
         product_id = view.findViewById(R.id.product_insert_id);
         product_price = view.findViewById(R.id.product_insert_price);
         product_name = view.findViewById(R.id.product_insert_name);
