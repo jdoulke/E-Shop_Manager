@@ -2,6 +2,7 @@ package com.ihu.e_shopmanager.orders;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -37,7 +38,13 @@ public class DeleteOrder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.order_delete_fragment, container, false);
+        View view;
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            view = inflater.inflate(R.layout.order_delete_fragment, container, false);
+        else
+            view = inflater.inflate(R.layout.order_delete_landscape_fragment, container, false);
 
 
         TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);

@@ -1,6 +1,7 @@
 package com.ihu.e_shopmanager.products;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
@@ -29,8 +30,14 @@ public class InsertProduct extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.products_insert_fragment, container, false);
+
+        View view;
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            view = inflater.inflate(R.layout.products_insert_fragment, container, false);
+        else
+            view = inflater.inflate(R.layout.products_insert_landscape_fragment, container, false);
 
         TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
         toolbarText.setText("Προϊόντα");

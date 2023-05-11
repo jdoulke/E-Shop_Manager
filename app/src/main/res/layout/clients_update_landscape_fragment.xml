@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Επεξεργασία Στοιχείων Πελάτη"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_margin="5dp"/>
+
+    <EditText
+        android:id="@+id/client_update_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="3"
+        android:inputType="number"
+        android:hint="Client ID / Αναγνωριστικό πελάτη"/>
+
+    <EditText
+        android:id="@+id/client_update_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Όνομα πελάτη" />
+
+    <EditText
+        android:id="@+id/client_update_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Επίθετο πελάτη" />
+
+    <EditText
+        android:id="@+id/client_update_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Κινητό πελάτη" />
+
+    <EditText
+        android:id="@+id/client_update_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textNoSuggestions"
+        android:hint="Ημερομηνία εγγραφής" />
+
+    <Button
+        android:id="@+id/client_update_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="Αλλαγή Στοιχείων" />
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.ihu.e_shopmanager.products;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
@@ -35,7 +36,13 @@ public class ProductsFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.products_fragment, container, false);
+        View view;
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            view = inflater.inflate(R.layout.products_fragment, container, false);
+        else
+            view = inflater.inflate(R.layout.products_landscape_fragment, container, false);
 
         addProduct = view.findViewById(R.id.product_add_button);
         addProduct.setOnClickListener(this);

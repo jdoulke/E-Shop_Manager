@@ -1,6 +1,7 @@
 package com.ihu.e_shopmanager.clients;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
@@ -29,7 +30,14 @@ public class SearchClient extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.clients_search_fragment, container, false);
+        int orientation = getResources().getConfiguration().orientation;
+
+        View view;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            view = inflater.inflate(R.layout.clients_search_fragment, container, false);
+        else
+            view = inflater.inflate(R.layout.clients_search_landscape_fragment, container, false);
+
 
 
         TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);

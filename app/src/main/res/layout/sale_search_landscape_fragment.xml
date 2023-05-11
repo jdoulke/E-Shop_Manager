@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="0dp"
-        android:text="Αναζήτηση Παραγγελίας"
+        android:layout_margin="4dp"
+        android:text="Αναζήτηση Πώλησης"
         android:textAlignment="center"
-        android:textSize="22dp"
+        android:textSize="24dp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -28,45 +28,49 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/order_search_order_id"
+                android:id="@+id/sale_search_sale_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Εισάγεται το αναγνωριστικό παραγγελίας"
+                android:hint="Εισάγεται το αναγνωριστικό πώλησης"
                 android:inputType="number" />
 
-            <EditText
-                android:id="@+id/order_search_client_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Εισάγεται το αναγνωριστικό πελάτη"
-                android:inputType="number" />
-
-            <EditText
-                android:id="@+id/order_search_cleint_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Εισάγεται το κινητό πελάτη"
-                android:inputType="number" />
 
             <Button
-                android:id="@+id/order_search_button"
+                android:id="@+id/sale_search_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/buttons_background"
-                android:text="Αναζήτηση Παραγγελίας" />
+                android:text="Αναζήτηση Πώλησης" />
 
             <TextView
-                android:id="@+id/order_search_client_view"
+                android:id="@+id/sale_search_client_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:text=" Πελάτης:"
                 android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/sale_search_order_date_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text=" Ημερομηνία Παραγγελίας: "
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sale_search_sale_date_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text=" Ημερομηνία Πώλησης: "
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
 
@@ -81,49 +85,26 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="Παραγγελία"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/order_search_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
-
-            <TextView
-                android:id="@+id/order_search_date_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:text=" Ημερομηνία Παραγγελίας: "
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:gravity="center"
                 android:text="Λίστα Προϊόντων"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"/>
 
             <ScrollView
-                android:id="@+id/orders_search_scrollview"
+                android:id="@+id/sales_search_scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="112dp"
+                android:layout_height="160dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="0dp">
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
-                    android:id="@+id/order_search_linearlayout"
+                    android:id="@+id/sale_search_linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/order_search_item"
+                        android:id="@+id/sale_search_item"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="" />
@@ -132,10 +113,11 @@
 
 
             <TextView
-                android:id="@+id/order_search_price_view"
+                android:id="@+id/sale_search_price_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="10dp"
                 android:text=" Σύνολο: 0€"
                 android:textSize="20sp"
                 android:textStyle="bold" />

@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/order_child_id"
-        android:layout_width="22dp"
+        android:layout_width="26dp"
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:gravity="center"

@@ -2,6 +2,7 @@ package com.ihu.e_shopmanager.orders;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -15,12 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
@@ -38,7 +35,13 @@ public class CompletionOfOrder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.order_complilation, container, false);
+        View view;
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            view = inflater.inflate(R.layout.order_complilation_fragment, container, false);
+        else
+            view = inflater.inflate(R.layout.order_complilation_landscape_fragment, container, false);
 
         TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
         toolbarText.setText("Παραγγελίες");

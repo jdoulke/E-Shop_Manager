@@ -9,71 +9,80 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="24dp"
-        android:text="Αναζήτηση Πελάτη"
+        android:layout_margin="2dp"
+        android:text="Αναζήτηση Προϊόντος"
         android:textAlignment="center"
-        android:textSize="24dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/client_search_id"
+        android:id="@+id/product_search_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Εισάγεται Client ID/ Αναγνωριστικό πελάτη"
+        android:hint="Εισάγεται το αναγνωριστικό προϊόντος"
         android:inputType="number" />
 
-    <EditText
-        android:id="@+id/client_search_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Εισάγεται το κινητό του πελάτη"
-        android:inputType="phone" />
-
     <Button
-        android:id="@+id/client_fragment_search_button"
+        android:id="@+id/product_search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/buttons_background"
-        android:text="Αναζήτηση Πελάτη" />
+        android:text="Αναζήτηση Προϊόντος" />
 
     <TextView
-        android:id="@+id/client_search_id_view"
+        android:id="@+id/product_search_id_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="10dp"
         android:text="Αναγνωριστικό:"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/client_search_name_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Πελάτης:"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
 
     <TextView
-        android:id="@+id/client_search_phone_view"
+        android:id="@+id/product_search_name_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Κινητό:"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="10dp"
+        android:text="Προϊόν:"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/client_search_date_view"
+        android:id="@+id/product_search_category_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Ημ/νία Εγγραφής:"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="10dp"
+
+        android:text="Κατηγορία:"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/product_search_stock_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="10dp"
+
+        android:text="Αποθέματα:"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/product_search_price_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="10dp"
+
+        android:text="Αξία:"
         android:textSize="20sp"
         android:textStyle="bold" />
 

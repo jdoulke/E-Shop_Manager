@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Δημιουργία Παραγγελίας"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:layout_margin="1dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/order_insert_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="Order ID / Αναγνωριστικό Παραγγελίας"/>
+
+            <EditText
+                android:id="@+id/order_insert_client_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+
+                android:hint="Client ID / Αναγνωριστικό Πελάτη" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Κατηγορία προϊόντος"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="0dp"/>
+
+            <Spinner
+                android:id="@+id/order_category_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Προϊόν"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="0dp"/>
+
+            <Spinner
+                android:id="@+id/order_product_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"/>
+
+            <EditText
+                android:id="@+id/product_quantity_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="Ποσότητα Προϊόντος"/>
+
+            <Button
+                android:id="@+id/order_add_product_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons_background"
+                android:text="Προσθήκη Προϊόντος"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/order_client_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Πελάτης: "
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <ScrollView
+                android:id="@+id/orders_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="148dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/order_linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/order_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/order_total_price_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Σύνολο: 0€"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"/>
+
+            <Button
+                android:id="@+id/order_insert_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons_background"
+                android:text="Υποβολή Παραγγελίας"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
