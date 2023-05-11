@@ -23,6 +23,7 @@ import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 import com.ihu.e_shopmanager.clients.Client;
 import com.ihu.e_shopmanager.products.Product;
+import com.ihu.e_shopmanager.products.ProductWithQuantity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -133,6 +134,12 @@ public class DeleteOrder extends Fragment {
             int id = parseInt(order_search_order_id.getText().toString());
             Order order = orderMap.get(id);
             if(order != null) {
+                List<ProductWithQuantity> productWithQuantity = order.getProducts();
+                for(ProductWithQuantity productWithQuantity1 : productWithQuantity){
+                    Product product = productWithQuantity1.getProduct();
+                    product.setStock(product.getStock() + productWithQuantity1.getQuantity());
+                    MainActivity.myAppDatabase.myDao().updateProduct(product);
+                }
                 MainActivity.myAppDatabase.myDao().deleteOrder(order);
                 Toast.makeText(getActivity(), "Η παραγγελία αφαιρέθηκε ", Toast.LENGTH_LONG).show();
             }else

@@ -1,6 +1,8 @@
 package com.ihu.e_shopmanager.orders;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -19,6 +21,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -39,6 +44,8 @@ public class InsertOrder extends Fragment {
 
     private Set<String> productCategories = new HashSet<>();
     private Set<String> productFromCategory = new HashSet<>();
+
+    private int notificationId = 1;
 
 
     @Override
@@ -181,6 +188,10 @@ public class InsertOrder extends Fragment {
                 totalPriceView.setText("Σύνολο: " + formattedPrice + "€");
                 product.setStock(product.getStock() - parseInt(quantity.getText().toString()));
                 MainActivity.myAppDatabase.myDao().updateProduct(product);
+                if(product.getStock() < 6 && product.getStock() > 0 )
+                    showNotification("Εξάντληση προϊόντος", "Το προϊόν " + product.getName() + "έχει λίγα αποθέματα.");
+                else if(product.getStock() == 0)
+                    showNotification("Εξάντληση προϊόντος", "Το προϊόν " + product.getName() + "δεν έχει άλλα αποθέματα.");
             }else {
                 Toast.makeText(getActivity(), "Δεν υπάρχουν αποθέματα για αυτό το προϊόν.", Toast.LENGTH_LONG).show();
             }
@@ -252,6 +263,30 @@ public class InsertOrder extends Fragment {
             System.out.println("Could not parse " + ex);
             return 0;
         }
+    }
+
+    private void showNotification(String notificationTitle, String notificationDescription) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
+                .setSmallIcon(R.drawable.store)
+                .setContentTitle("E-Shop Manager")
+                .setContentText("Συγχαρητήρια. Κάνατε τζίρο πάνω από 10000€")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // Display the notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManager.notify(notificationId, builder.build());
+        notificationId++;
+
     }
 
 

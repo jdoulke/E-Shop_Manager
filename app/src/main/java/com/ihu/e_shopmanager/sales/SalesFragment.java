@@ -1,7 +1,9 @@
 package com.ihu.e_shopmanager.sales;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -14,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -32,6 +37,8 @@ import java.util.Map;
 public class SalesFragment extends Fragment implements View.OnClickListener{
 
     Button searchSale, editSale;
+
+    int notificationId = 1;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -162,6 +169,31 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchSale()).addToBackStack(null).commit();
         else if (v.getId() == R.id.sale_edit_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new EditSale()).addToBackStack(null).commit();
+
+    }
+
+
+    private void showNotification(String notificationTitle, String notificationDescription) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
+                .setSmallIcon(R.drawable.store)
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationDescription)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // Display the notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManager.notify(notificationId, builder.build());
+        notificationId++;
 
     }
 
