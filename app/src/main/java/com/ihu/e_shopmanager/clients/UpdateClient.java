@@ -128,7 +128,7 @@ public class UpdateClient extends Fragment {
                 MainActivity.myAppDatabase.myDao().updateClient(client);
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                Toast.makeText(getActivity(),"Τα στοιχεία ενημερώθηκαν",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Τα στοιχεία ενημερώθηκαν.",Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 String message = e.getMessage();
                 Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();

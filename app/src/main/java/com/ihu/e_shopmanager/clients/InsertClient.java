@@ -56,37 +56,50 @@ public class InsertClient extends Fragment {
         button.setOnClickListener(v -> {
             Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = 0;
+            int id = -1;
             try {
                 id = Integer.parseInt(client_id.getText().toString());
             } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του ID. ",Toast.LENGTH_LONG).show();
+                return;
             }
             String name = client_name.getText().toString();
             String lastname = client_lastname.getText().toString();
+            if(name.isEmpty()){
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του ονόματος. ",Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(lastname.isEmpty()){
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του επιθέτου. ",Toast.LENGTH_LONG).show();
+                return;
+            }
             long phone_number = 0;
             try {
                 phone_number = Long.parseLong(client_phone_number.getText().toString());
             } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του τηλεφώνου. ",Toast.LENGTH_LONG).show();
+                return;
             }
             try {
-                Client client = new Client();
-                client.setId(id);
-                client.setName(name);
-                client.setLastname(lastname);
-                client.setPhone_number(phone_number);
-                Date currentDate = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedDate = dateFormat.format(currentDate);
-                client.setRegisteration_date(formattedDate);
-                MainActivity.myAppDatabase.myDao().insertClient(client);
+                if(id != -1 && !name.isEmpty() && !lastname.isEmpty() && phone_number != 0) {
+                    Client client = new Client();
+                    client.setId(id);
+                    client.setName(name);
+                    client.setLastname(lastname);
+                    client.setPhone_number(phone_number);
+                    Date currentDate = new Date();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    String formattedDate = dateFormat.format(currentDate);
+                    client.setRegisteration_date(formattedDate);
+                    MainActivity.myAppDatabase.myDao().insertClient(client);
+                    Toast.makeText(getActivity(),"Ο πελάτης προστέθηκε.",Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του πελάτη. ",Toast.LENGTH_LONG).show();
+                }
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                Toast.makeText(getActivity(),"Ο πελάτης προστέθηκε",Toast.LENGTH_LONG).show();
             } catch (Exception e) {
-                String message = e.getMessage();
-                Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του πελάτη. ",Toast.LENGTH_LONG).show();
             }
             client_name.setText("");
             client_id.setText("");

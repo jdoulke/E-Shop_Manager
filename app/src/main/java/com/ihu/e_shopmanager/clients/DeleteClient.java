@@ -41,18 +41,21 @@ public class DeleteClient extends Fragment {
         button.setOnClickListener(v -> {
             Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = 0;
+            int id = -1;
             try {
-                id = Integer.parseInt(editText.getText().toString());
+                if(!editText.getText().toString().equals(""))
+                    id = Integer.parseInt(editText.getText().toString());
             } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του ID. ",Toast.LENGTH_LONG).show();
             }
-            Client client = new Client();
-            client.setId(id);
-            MainActivity.myAppDatabase.myDao().deleteClient(client);
+            if(id != -1) {
+                Client client = new Client();
+                client.setId(id);
+                MainActivity.myAppDatabase.myDao().deleteClient(client);
+                Toast.makeText(getActivity(),"Ο πελάτης αφαιρέθηκε.",Toast.LENGTH_LONG).show();
+            }
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            Toast.makeText(getActivity(),"Ο πελάτης αφαιρέθηκε ",Toast.LENGTH_LONG).show();
             editText.setText("");
         });
         return view;
