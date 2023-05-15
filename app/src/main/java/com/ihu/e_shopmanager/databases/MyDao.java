@@ -45,6 +45,11 @@ public interface MyDao {
     @Query("select * from `order`")
     List<Order> getOrders();
 
+    @Query("Select * From CLIENT where client_id = :client_id")
+    Client getClientFromId(int client_id);
+    @Query("Select * From CLIENT where phone_number = :phone_number")
+    Client getClientFromPhone(long phone_number);
+
     @Query("SELECT * FROM Product WHERE category = :category")
     List<Product> getProductsInCategory(String category);
 

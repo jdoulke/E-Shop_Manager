@@ -54,24 +54,23 @@ public class SearchClient extends Fragment {
             Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
-            List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
 
             String searchId = client_search_id.getText().toString();
             String searchPhone = client_search_phone.getText().toString();
 
-            for (Client i : clients) {
-                int code = i.getId();
-                long phone = i.getPhone_number();
 
-                if (!searchId.isEmpty() && searchId.equals(String.valueOf(code))) {
-                    displayClientDetails(i, view);
-                    return;
-                }
+            if (!searchId.isEmpty()) {
+                Client client = MainActivity.myAppDatabase.myDao().getClientFromId(Integer.parseInt(searchId));
+                if(client != null)
+                    displayClientDetails(client, view);
+                return;
+            }
 
-                if (!searchPhone.isEmpty() && searchPhone.equals(String.valueOf(phone))) {
-                    displayClientDetails(i, view);
-                    return;
-                }
+            if (!searchPhone.isEmpty()) {
+                Client client = MainActivity.myAppDatabase.myDao().getClientFromPhone(Long.parseLong(searchPhone));
+                if(client != null)
+                    displayClientDetails(client, view);
+                return;
             }
 
             displayClientNotFound(view);
