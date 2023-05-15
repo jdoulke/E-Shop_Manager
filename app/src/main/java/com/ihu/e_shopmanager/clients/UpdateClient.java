@@ -57,10 +57,7 @@ public class UpdateClient extends Fragment {
         client_phone_number = view.findViewById(R.id.client_update_phone);
         client_date = view.findViewById(R.id.client_update_date);
 
-        List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
-        HashMap<Integer, Client> clientMap = new HashMap<>();
-        for (Client client : clients)
-            clientMap.put(client.getId(), client);
+
 
         client_id.addTextChangedListener(new TextWatcher() {
             @Override
@@ -85,7 +82,7 @@ public class UpdateClient extends Fragment {
 
                 } else {
                     int id = parseInt(s.toString());
-                    Client client = clientMap.get(id);
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromId(id);
 
                     if(client == null){
                         client_name.setText("");
