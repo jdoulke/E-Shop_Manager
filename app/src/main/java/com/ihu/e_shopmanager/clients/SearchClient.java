@@ -61,16 +61,18 @@ public class SearchClient extends Fragment {
 
             if (!searchId.isEmpty()) {
                 Client client = MainActivity.myAppDatabase.myDao().getClientFromId(Integer.parseInt(searchId));
-                if(client != null)
+                if(client != null) {
                     displayClientDetails(client, view);
-                return;
+                    return;
+                }
             }
 
             if (!searchPhone.isEmpty()) {
                 Client client = MainActivity.myAppDatabase.myDao().getClientFromPhone(Long.parseLong(searchPhone));
-                if(client != null)
+                if(client != null) {
                     displayClientDetails(client, view);
-                return;
+                    return;
+                }
             }
 
             displayClientNotFound(view);
