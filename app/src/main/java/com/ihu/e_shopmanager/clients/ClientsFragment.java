@@ -71,7 +71,7 @@ public class ClientsFragment extends Fragment implements View.OnClickListener {
         registrationTextView.setText("Ημ/νία Εγγραφής");
         mLinearLayout.addView(headerView);
 
-        // Inflate client_item.xml for each client and add them to LinearLayout
+
         for (Client client : clients) {
             View clientView = inflater.inflate(R.layout.client_item, null);
             idTextView = clientView.findViewById(R.id.client_child_id);

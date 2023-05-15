@@ -44,6 +44,9 @@ public class ProductsFragment extends Fragment implements View.OnClickListener{
         else
             view = inflater.inflate(R.layout.products_landscape_fragment, container, false);
 
+        TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
+        toolbarText.setText("Προϊόντα");
+
         addProduct = view.findViewById(R.id.product_add_button);
         addProduct.setOnClickListener(this);
         removeProduct = view.findViewById(R.id.product_remove_button);
