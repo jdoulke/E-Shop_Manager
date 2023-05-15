@@ -158,7 +158,7 @@ public class InsertOrder extends Fragment {
             vibrator.vibrate(40);
             String selectedProduct = productSpinner.getSelectedItem().toString();
             Product product = productHashMap.get(selectedProduct);
-            if(product.getStock() > parseInt(quantity.getText().toString())) {
+            if(product.getStock() >= parseInt(quantity.getText().toString())) {
                 View productView = inflater.inflate(R.layout.order_item, null);
                 TextView idView = productView.findViewById(R.id.order_child_id);
                 TextView nameView = productView.findViewById(R.id.order_child_name);
@@ -189,9 +189,9 @@ public class InsertOrder extends Fragment {
                 product.setStock(product.getStock() - parseInt(quantity.getText().toString()));
                 MainActivity.myAppDatabase.myDao().updateProduct(product);
                 if(product.getStock() < 6 && product.getStock() > 0 )
-                    showNotification("Εξάντληση προϊόντος", "Το προϊόν " + product.getName() + "έχει λίγα αποθέματα.");
+                    showNotification("Εξάντληση προϊόντος", "Το προϊόν " + product.getName() + " έχει λίγα αποθέματα.");
                 else if(product.getStock() == 0)
-                    showNotification("Εξάντληση προϊόντος", "Το προϊόν " + product.getName() + "δεν έχει άλλα αποθέματα.");
+                    showNotification("Εξάντληση προϊόντος", "Το προϊόν " + product.getName() + " δεν έχει άλλα αποθέματα.");
             }else {
                 Toast.makeText(getActivity(), "Δεν υπάρχουν αποθέματα για αυτό το προϊόν.", Toast.LENGTH_LONG).show();
             }
@@ -268,8 +268,8 @@ public class InsertOrder extends Fragment {
     private void showNotification(String notificationTitle, String notificationDescription) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
                 .setSmallIcon(R.drawable.store)
-                .setContentTitle("E-Shop Manager")
-                .setContentText("Συγχαρητήρια. Κάνατε τζίρο πάνω από 10000€")
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationDescription)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         // Display the notification

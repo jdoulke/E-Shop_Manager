@@ -141,7 +141,6 @@ public class SearchSale extends Fragment {
 
             if(sale == null){
                 Toast.makeText(getActivity(),"Δε βρέθηκε Πώληση",Toast.LENGTH_LONG).show();
-                resetViews(view, inflater);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 return;
             }

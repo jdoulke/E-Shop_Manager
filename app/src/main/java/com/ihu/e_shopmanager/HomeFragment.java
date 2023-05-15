@@ -198,8 +198,10 @@ public class HomeFragment extends Fragment {
                 }
             }
             Product product = productMap.get(productWithMaxSales);
-            bestClient.setText("Καλύτερος Πελάτης: " + client.getName() + " " + client.getLastname());
-            bestProduct.setText("Δημοφιλέστερο Προϊόν: " + product.getName());
+            if(client != null && product != null) {
+                bestClient.setText("Καλύτερος Πελάτης: " + client.getName() + " " + client.getLastname());
+                bestProduct.setText("Δημοφιλέστερο Προϊόν: " + product.getName());
+            }
             String formattedPrice = String.format("%.2f", totalPrice);
             turnover.setText("Συνολικός Τζίρος: "+ formattedPrice + "€");
         }).addOnFailureListener(e -> {
@@ -207,10 +209,14 @@ public class HomeFragment extends Fragment {
         });
         Query query = salesReference.orderBy("value",  Query.Direction.DESCENDING).limit(1);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
-            Sale sale = documentSnapshot.toObject(Sale.class);
-            if(sale != null)
-                bestSale.setText("Μεγαλύτερη Πώληση: " + sale.getValue() + "€");
+            if(!queryDocumentSnapshots.getDocuments().isEmpty()) {
+                if (queryDocumentSnapshots.getDocuments().get(0).exists()) {
+                    DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                    Sale sale = documentSnapshot.toObject(Sale.class);
+                    if (sale != null)
+                        bestSale.setText("Μεγαλύτερη Πώληση: " + sale.getValue() + "€");
+                }
+            }
         }).addOnFailureListener(e -> Toast.makeText(getActivity(),"query operation failed.",Toast.LENGTH_LONG).show());
 
     }
