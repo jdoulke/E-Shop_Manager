@@ -51,40 +51,52 @@ public class InsertProduct extends Fragment {
         button.setOnClickListener(v -> {
             Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = 0;
+            int id = -1;
             try {
                 id = Integer.parseInt(product_id.getText().toString());
             } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του ID. ",Toast.LENGTH_LONG).show();
+                return;
             }
             String name = product_name.getText().toString();
             String category = product_category.getText().toString();
-            int stock = 0;
+            if(name.isEmpty()){
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του ονόματος. ",Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(category.isEmpty()){
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή της κατηγορίας. ",Toast.LENGTH_LONG).show();
+                return;
+            }
+            int stock = -1;
             try {
                 stock = Integer.parseInt(product_stock.getText().toString());
             } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του αποθέματος. ",Toast.LENGTH_LONG).show();
+                return;
             }
-            float price = 0;
+            float price = -1;
             try {
                 price = Float.parseFloat(product_price.getText().toString());
             } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή της αξίας του προϊόντος. ",Toast.LENGTH_LONG).show();
+                return;
             }
             try {
-                Product product = new Product();
-                product.setId(id);
-                product.setName(name);
-                product.setCategory(category);
-                product.setStock(stock);
-                product.setPrice(price);
-                MainActivity.myAppDatabase.myDao().insertProduct(product);
-                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                Toast.makeText(getActivity(),"To προϊόν προστέθηκε",Toast.LENGTH_LONG).show();
+                if(id != -1 && stock != -1 && price != -1) {
+                    Product product = new Product();
+                    product.setId(id);
+                    product.setName(name);
+                    product.setCategory(category);
+                    product.setStock(stock);
+                    product.setPrice(price);
+                    MainActivity.myAppDatabase.myDao().insertProduct(product);
+                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    Toast.makeText(getActivity(), "To προϊόν προστέθηκε.", Toast.LENGTH_LONG).show();
+                }
             } catch (Exception e) {
-                String message = e.getMessage();
-                Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του προϊόντος. ",Toast.LENGTH_LONG).show();
             }
             product_id.setText("");
             product_category.setText("");
