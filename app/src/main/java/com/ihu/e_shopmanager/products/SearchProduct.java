@@ -88,7 +88,7 @@ public class SearchProduct extends Fragment {
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-        Toast.makeText(getActivity(), "To προϊόν βρέθηκε", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "To προϊόν βρέθηκε.", Toast.LENGTH_LONG).show();
     }
 
     private void displayProductNotFound(View view) {
@@ -102,7 +102,7 @@ public class SearchProduct extends Fragment {
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-        Toast.makeText(getActivity(),"Δε βρέθηκε προϊόν",Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(),"Δε βρέθηκε προϊόν.",Toast.LENGTH_LONG).show();
     }
 
 }

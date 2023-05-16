@@ -99,7 +99,7 @@ public class SearchClient extends Fragment {
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-        Toast.makeText(getActivity(), "Ο πελάτης βρέθηκε", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Ο πελάτης βρέθηκε.", Toast.LENGTH_LONG).show();
     }
 
     private void displayClientNotFound(View view) {
@@ -113,7 +113,7 @@ public class SearchClient extends Fragment {
         InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-        Toast.makeText(getActivity(),"Δε βρέθηκε πελάτης",Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(),"Δε βρέθηκε πελάτης.",Toast.LENGTH_LONG).show();
     }
 
 }
