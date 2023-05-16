@@ -48,14 +48,14 @@ public class DeleteProduct extends Fragment {
             try {
                 id = Integer.parseInt(editText.getText().toString());
             } catch (NumberFormatException ex) {
-                System.out.println("Could not parse " + ex);
+                Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του ID. ",Toast.LENGTH_LONG).show();
             }
             Product product = new Product();
             product.setId(id);
             MainActivity.myAppDatabase.myDao().deleteProduct(product);
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            Toast.makeText(getActivity(),"To προϊόν αφαιρέθηκε ",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"To προϊόν αφαιρέθηκε.",Toast.LENGTH_LONG).show();
             editText.setText("");
         });
         return view;
