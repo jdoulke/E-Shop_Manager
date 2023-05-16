@@ -50,6 +50,8 @@ public interface MyDao {
     @Query("Select * From CLIENT where phone_number = :phone_number")
     Client getClientFromPhone(long phone_number);
 
+    @Query("Select * From product where product_id = :product_id")
+    Product getProductFromId(int product_id);
     @Query("SELECT * FROM Product WHERE category = :category")
     List<Product> getProductsInCategory(String category);
 

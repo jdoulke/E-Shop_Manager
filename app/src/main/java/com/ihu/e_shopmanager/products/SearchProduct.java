@@ -19,8 +19,9 @@ import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
+import com.ihu.e_shopmanager.clients.Client;
 
-import java.util.List;
+
 
 public class SearchProduct extends Fragment {
 
@@ -54,19 +55,14 @@ public class SearchProduct extends Fragment {
             Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
-            List<Product> products = MainActivity.myAppDatabase.myDao().getProducts();
-
             String searchId = product_search_id.getText().toString();
 
-
-            for (Product i : products) {
-                int id = i.getId();
-
-                if (!searchId.isEmpty() && searchId.equals(String.valueOf(id))) {
-                    displayProductDetails(i, view);
+            if (!searchId.isEmpty()) {
+                Product product = MainActivity.myAppDatabase.myDao().getProductFromId(Integer.parseInt(searchId));
+                if(product != null) {
+                    displayProductDetails(product, view);
                     return;
                 }
-
             }
 
             displayProductNotFound(view);
