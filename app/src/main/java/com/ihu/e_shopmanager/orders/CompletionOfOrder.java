@@ -95,7 +95,7 @@ public class CompletionOfOrder extends Fragment {
                         return;
                     }
 
-                    Client client = MainActivity.myAppDatabase.myDao().getClientFromOrder(orderID);
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromOrder(order.getClientId());
                     if (client == null) {
                         order_client_view.setText(" Πελάτης: ");
                         dateView.setText(" Ημερομηνία Παραγγελίας: ");
