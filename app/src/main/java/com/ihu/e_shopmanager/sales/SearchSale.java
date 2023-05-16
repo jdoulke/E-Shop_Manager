@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -35,11 +36,10 @@ import java.util.Map;
 
 public class SearchSale extends Fragment {
 
-    private final HashMap<Integer, Client> clientMap = new HashMap<>();
-    private final HashMap<Integer, Product> productHashMap = new HashMap<>();
     private final HashMap<Integer, Sale> salesMap = new HashMap<>();
+    @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view;
         int orientation = getResources().getConfiguration().orientation;
@@ -65,18 +65,10 @@ public class SearchSale extends Fragment {
 
         CollectionReference salesReference = MainActivity.firestoreDatabase.collection("Sales");
 
-        List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
-        List<Product> products = MainActivity.myAppDatabase.myDao().getProducts();
         List<Sale> sales = new ArrayList<>();
         List<ProductWithQuantity> productsWithQuantity = new ArrayList<>();
 
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        for (Client client : clients) {
-            clientMap.put(client.getId(), client);
-        }
-        for(Product product : products)
-            productHashMap.put(product.getId(), product);
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         mLinearLayout.addView(headerViews(inflater));
 
@@ -126,21 +118,21 @@ public class SearchSale extends Fragment {
             }
             for(Sale sale : sales)
                 salesMap.put(sale.getSale_id(), sale);
-            Toast.makeText(getActivity(),"Φορτώθηκαν τα δεδομένα",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"Φορτώθηκαν τα δεδομένα.",Toast.LENGTH_LONG).show();
         }).addOnFailureListener(e -> {
             Log.d("FireStore ERROR: ", e.getMessage());
         });
 
         searchButton.setOnClickListener(v -> {
 
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
             int id = parseInt(sale_search_sale_id.getText().toString());
             Sale sale = salesMap.get(id);
 
             if(sale == null){
-                Toast.makeText(getActivity(),"Δε βρέθηκε Πώληση",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Δε βρέθηκε Πώληση.",Toast.LENGTH_LONG).show();
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 return;
             }
@@ -148,8 +140,8 @@ public class SearchSale extends Fragment {
             orderDateView.setText(" Ημερομηνία Παραγγελίας: " + sale.getOrder_date());
             saleDateView.setText(" Ημερομηνία Πώλησης: " + sale.getSale_date());
             for(ProductWithQuantity productWithQuantity : productWithQuantities) {
-                View productView = inflater.inflate(R.layout.order_search_item, null);
-                Product product = productHashMap.get(productWithQuantity.getProduct().getId());
+                @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_search_item, null);
+                Product product = productWithQuantity.getProduct();
                 if(product != null) {
                     TextView idView = productView.findViewById(R.id.order_search_child_id);
                     TextView nameView = productView.findViewById(R.id.order_search_child_name);
@@ -170,7 +162,7 @@ public class SearchSale extends Fragment {
             }
 
 
-            String formattedPrice = String.format("%.2f", sale.getValue());
+            @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", sale.getValue());
             sale_search_price_view.setText("Σύνολο  " + formattedPrice + "€");
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
@@ -180,30 +172,10 @@ public class SearchSale extends Fragment {
         return view;
     }
 
-    private void resetViews(View view, LayoutInflater inflater) {
-
-
-
-        TextView order_search_price_view = view.findViewById(R.id.sale_search_price_view);
-        TextView orderDateView = view.findViewById(R.id.sale_search_order_date_view);
-        TextView saleDateView = view.findViewById(R.id.sale_search_sale_date_view);
-
-        LinearLayout order_search_linearlayout = view.findViewById(R.id.order_search_linearlayout);
-
-
-        order_search_linearlayout.removeAllViews();
-        order_search_linearlayout.addView(headerViews(inflater));
-        order_search_price_view.setText(" Σύνολο: 0€");
-        orderDateView.setText(" Ημερομηνία Παραγγελίας: ");
-        saleDateView.setText(" Ημερομηνία Πώλησης: ");
-
-    }
-
 
     private void registerEditTextListeners(View view){
 
         EditText sale_search_sale_id = view.findViewById(R.id.sale_search_sale_id);
-
 
         TextView client_view = view.findViewById(R.id.sale_search_client_view);
 
@@ -232,7 +204,7 @@ public class SearchSale extends Fragment {
                         client_view.setText(" Πελάτης: ");
                         return;
                     }
-                    Client client = clientMap.get(sale.getClient_id());
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromId(sale.getClient_id());
                     if(client != null)
                         client_view.setText(" Πελάτης: " + client.getName() + " " + client.getLastname());
                 }
@@ -241,9 +213,10 @@ public class SearchSale extends Fragment {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private View headerViews(LayoutInflater inflater) {
 
-        View headerView = inflater.inflate(R.layout.order_search_item, null);
+        @SuppressLint("InflateParams") View headerView = inflater.inflate(R.layout.order_search_item, null);
         TextView idTextView = headerView.findViewById(R.id.order_search_child_id);
         TextView nameTextView = headerView.findViewById(R.id.order_search_child_name);
         TextView categoryTextView = headerView.findViewById(R.id.order_search_child_category);

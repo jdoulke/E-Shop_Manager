@@ -76,7 +76,7 @@ public class EditSale extends Fragment {
         List<ProductWithQuantity> productsWithQuantity = new ArrayList<>();
 
 
-        HashMap<Integer, Client> clientMap = new HashMap<>();
+
         HashMap<Integer,Sale> salesMap = new HashMap<>();
 
         salesReference.get().addOnSuccessListener(querySnapshot -> {
@@ -122,8 +122,7 @@ public class EditSale extends Fragment {
                 }
             }
 
-            for (Client client : clients)
-                clientMap.put(client.getId(), client);
+
             for(Sale sale : sales)
                 salesMap.put(sale.getSale_id(), sale);
 

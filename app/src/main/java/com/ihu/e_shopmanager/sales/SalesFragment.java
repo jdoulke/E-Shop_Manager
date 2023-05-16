@@ -1,9 +1,7 @@
 package com.ihu.e_shopmanager.sales;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -16,9 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -38,11 +34,10 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
 
     Button searchSale, editSale;
 
-    int notificationId = 1;
 
     @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view;
         int orientation = getResources().getConfiguration().orientation;
@@ -121,7 +116,7 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
             for (Client client : clients)
                 clientMap.put(client.getId(), client);
 
-            View headerView  = inflater.inflate(R.layout.order_list_item, null);
+            @SuppressLint("InflateParams") View headerView  = inflater.inflate(R.layout.order_list_item, null);
             TextView idTextView = headerView.findViewById(R.id.order_child_id);
             TextView clientNameTextView = headerView.findViewById(R.id.order_child_client_name);
             TextView priceTextView = headerView.findViewById(R.id.order_child_total_price);
@@ -133,7 +128,7 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
             float totalPrice = 0;
             mLinearLayout.addView(headerView);
             for (Sale sale : sales) {
-                View productView = inflater.inflate(R.layout.order_list_item, null);
+                @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_list_item, null);
                 TextView idView = productView.findViewById(R.id.order_child_id);
                 TextView clientNameView = productView.findViewById(R.id.order_child_client_name);
                 TextView priceView = productView.findViewById(R.id.order_child_total_price);
@@ -142,16 +137,16 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
                 Client client = clientMap.get(sale.getClient_id());
                 if(client != null) {
                     clientNameView.setText(client.getName() + " " + client.getLastname());
-                    String formattedPrice = String.format("%.2f", sale.getValue());
+                    @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", sale.getValue());
                     priceView.setText(formattedPrice + "€");
                     dateView.setText(sale.getSale_date());
                     totalPrice += sale.getValue();
                 }
                 mLinearLayout.addView(productView);
             }
-            String formattedPrice = String.format("%.2f", totalPrice);
+            @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", totalPrice);
             total_sales.setText("Σύνολο Πωλήσεων: " + formattedPrice + "€");
-            Toast.makeText(getActivity(),"Φορτώθηκαν τα δεδομένα",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"Φορτώθηκαν τα δεδομένα.",Toast.LENGTH_LONG).show();
         }).addOnFailureListener(e -> {
             Log.d("FireStore ERROR: ", e.getMessage());
         });
@@ -163,7 +158,7 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(40);
         if (v.getId() == R.id.sale_search_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SearchSale()).addToBackStack(null).commit();
@@ -173,28 +168,5 @@ public class SalesFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    private void showNotification(String notificationTitle, String notificationDescription) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
-                .setSmallIcon(R.drawable.store)
-                .setContentTitle(notificationTitle)
-                .setContentText(notificationDescription)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        // Display the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        notificationManager.notify(notificationId, builder.build());
-        notificationId++;
-
-    }
 
 }

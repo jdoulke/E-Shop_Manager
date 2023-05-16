@@ -13,16 +13,13 @@ public class Sale {
     private int sale_id;
     private String sale_date;
     private String order_date;
-
     private List<ProductWithQuantity> productsList;
 
     public List<ProductWithQuantity> getProductsList() {
         return productsList;
     }
 
-    public void setProductsList(List<ProductWithQuantity> productsList) {
-        this.productsList = productsList;
-    }
+    public void setProductsList(List<ProductWithQuantity> productsList) {this.productsList = productsList;}
 
     public String getOrder_date() {
         return order_date;
