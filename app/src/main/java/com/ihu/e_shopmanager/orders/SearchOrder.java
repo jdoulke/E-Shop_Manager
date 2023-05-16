@@ -85,7 +85,7 @@ public class SearchOrder extends Fragment {
                 Order order = MainActivity.myAppDatabase.myDao().getOrderFromId(id);
 
                 if(order == null){
-                    Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία.",Toast.LENGTH_LONG).show();
                     resetViews(view,adapter,orderSpinner, inflater);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     return;
@@ -127,7 +127,7 @@ public class SearchOrder extends Fragment {
                 Client client = MainActivity.myAppDatabase.myDao().getClientFromId(id);
 
                 if(client == null){
-                    Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία.",Toast.LENGTH_LONG).show();
                     resetViews(view,adapter,orderSpinner, inflater);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     return;
@@ -311,13 +311,13 @@ public class SearchOrder extends Fragment {
                         }
                     });
                 }else {
-                    Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία για αυτόν τον πελάτη",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία για αυτόν τον πελάτη.",Toast.LENGTH_LONG).show();
                     resetViews(view,adapter,orderSpinner, inflater);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     return;
                 }
             }else{
-                Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία.",Toast.LENGTH_LONG).show();
                 order_search_linearlayout.removeAllViews();
                 order_search_linearlayout.addView(headerViews(inflater));
                 adapter.clear();
