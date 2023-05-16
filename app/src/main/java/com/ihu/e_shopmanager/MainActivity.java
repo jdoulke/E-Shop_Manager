@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ihu.e_shopmanager.clients.ClientsFragment;
-import com.ihu.e_shopmanager.databases.EshopDatabase;
+import com.ihu.e_shopmanager.database.EshopDatabase;
 import com.ihu.e_shopmanager.orders.OrdersFragment;
 import com.ihu.e_shopmanager.products.ProductsFragment;
 import com.ihu.e_shopmanager.sales.SalesFragment;

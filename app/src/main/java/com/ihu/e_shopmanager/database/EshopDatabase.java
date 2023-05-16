@@ -1,4 +1,4 @@
-package com.ihu.e_shopmanager.databases;
+package com.ihu.e_shopmanager.database;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
