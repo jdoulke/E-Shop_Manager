@@ -1,5 +1,6 @@
 package com.ihu.e_shopmanager.clients;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -23,8 +25,6 @@ import com.ihu.e_shopmanager.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class UpdateClient extends Fragment {
@@ -37,7 +37,7 @@ public class UpdateClient extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view;
@@ -106,7 +106,7 @@ public class UpdateClient extends Fragment {
         button = view.findViewById(R.id.client_update_button);
         button.setOnClickListener(v -> {
 
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
             String name = client_name.getText().toString();
@@ -123,7 +123,7 @@ public class UpdateClient extends Fragment {
                 client.setPhone_number(phone_number);
                 client.setRegisteration_date(date);
                 MainActivity.myAppDatabase.myDao().updateClient(client);
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 Toast.makeText(getActivity(),"Τα στοιχεία ενημερώθηκαν.",Toast.LENGTH_LONG).show();
             } catch (Exception e) {
@@ -159,9 +159,11 @@ public class UpdateClient extends Fragment {
 
     private static String formatDate(String s) {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date selectedDate = dateFormat.parse(s);
-            return dateFormat.format(selectedDate);
+            if(selectedDate != null)
+                return dateFormat.format(selectedDate);
+            return "";
         } catch (Exception e) {
             e.printStackTrace();
             return "";

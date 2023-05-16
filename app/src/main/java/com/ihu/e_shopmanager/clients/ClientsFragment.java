@@ -1,5 +1,6 @@
 package com.ihu.e_shopmanager.clients;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,18 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
-import com.ihu.e_shopmanager.clients.Client;
-import com.ihu.e_shopmanager.clients.DeleteClient;
-import com.ihu.e_shopmanager.clients.InsertClient;
-import com.ihu.e_shopmanager.clients.SearchClient;
-import com.ihu.e_shopmanager.clients.UpdateClient;
 
 import java.util.List;
 
@@ -28,8 +24,9 @@ public class ClientsFragment extends Fragment implements View.OnClickListener {
 
     Button addClient, removeClient, editClient, searchClient;
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         int orientation = getResources().getConfiguration().orientation;
@@ -57,7 +54,7 @@ public class ClientsFragment extends Fragment implements View.OnClickListener {
         // Get clients from database
         List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
 
-        View headerView  = inflater.inflate(R.layout.client_item, null);
+        @SuppressLint("InflateParams") View headerView  = inflater.inflate(R.layout.client_item, null);
         TextView idTextView = headerView.findViewById(R.id.client_child_id);
         TextView nameTextView = headerView.findViewById(R.id.client_child_name);
         TextView lastNameTextView = headerView.findViewById(R.id.client_child_lastname);
@@ -73,7 +70,7 @@ public class ClientsFragment extends Fragment implements View.OnClickListener {
 
 
         for (Client client : clients) {
-            View clientView = inflater.inflate(R.layout.client_item, null);
+            @SuppressLint("InflateParams") View clientView = inflater.inflate(R.layout.client_item, null);
             idTextView = clientView.findViewById(R.id.client_child_id);
             nameTextView = clientView.findViewById(R.id.client_child_name);
             lastNameTextView = clientView.findViewById(R.id.client_child_lastname);
@@ -97,7 +94,7 @@ public class ClientsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(40);
         if (v.getId() == R.id.client_add_button)
             MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new InsertClient()).addToBackStack(null).commit();

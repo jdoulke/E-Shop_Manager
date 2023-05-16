@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 
+
+
 public class DeleteClient extends Fragment {
 
     EditText editText;
@@ -39,7 +41,7 @@ public class DeleteClient extends Fragment {
         editText = view.findViewById(R.id.client_delete_id);
         button = view.findViewById(R.id.client_fragment_remove_button);
         button.setOnClickListener(v -> {
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
             int id = -1;
             try {
@@ -55,7 +57,7 @@ public class DeleteClient extends Fragment {
                 MainActivity.myAppDatabase.myDao().deleteClient(client);
                 Toast.makeText(getActivity(),"Ο πελάτης αφαιρέθηκε.",Toast.LENGTH_LONG).show();
             }
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             editText.setText("");
         });

@@ -1,5 +1,6 @@
 package com.ihu.e_shopmanager.clients;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -32,7 +34,7 @@ public class InsertClient extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
@@ -54,9 +56,9 @@ public class InsertClient extends Fragment {
         client_phone_number = view.findViewById(R.id.client_phone_number);
         button = view.findViewById(R.id.client_fragment_add_button);
         button.setOnClickListener(v -> {
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = -1;
+            int id;
             try {
                 id = Integer.parseInt(client_id.getText().toString());
             } catch (NumberFormatException ex) {
@@ -73,7 +75,7 @@ public class InsertClient extends Fragment {
                 Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του επιθέτου. ",Toast.LENGTH_LONG).show();
                 return;
             }
-            long phone_number = 0;
+            long phone_number;
             try {
                 phone_number = Long.parseLong(client_phone_number.getText().toString());
             } catch (NumberFormatException ex) {
@@ -81,22 +83,18 @@ public class InsertClient extends Fragment {
                 return;
             }
             try {
-                if(id != -1 && !name.isEmpty() && !lastname.isEmpty() && phone_number != 0) {
-                    Client client = new Client();
-                    client.setId(id);
-                    client.setName(name);
-                    client.setLastname(lastname);
-                    client.setPhone_number(phone_number);
-                    Date currentDate = new Date();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    String formattedDate = dateFormat.format(currentDate);
-                    client.setRegisteration_date(formattedDate);
-                    MainActivity.myAppDatabase.myDao().insertClient(client);
-                    Toast.makeText(getActivity(),"Ο πελάτης προστέθηκε.",Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του πελάτη. ",Toast.LENGTH_LONG).show();
-                }
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                Client client = new Client();
+                client.setId(id);
+                client.setName(name);
+                client.setLastname(lastname);
+                client.setPhone_number(phone_number);
+                Date currentDate = new Date();
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = dateFormat.format(currentDate);
+                client.setRegisteration_date(formattedDate);
+                MainActivity.myAppDatabase.myDao().insertClient(client);
+                Toast.makeText(getActivity(),"Ο πελάτης προστέθηκε.",Toast.LENGTH_LONG).show();
+                InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             } catch (Exception e) {
                 Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του πελάτη. ",Toast.LENGTH_LONG).show();

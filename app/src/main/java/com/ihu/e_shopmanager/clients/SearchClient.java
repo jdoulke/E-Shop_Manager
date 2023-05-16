@@ -1,5 +1,6 @@
 package com.ihu.e_shopmanager.clients;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,12 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
 
-import java.util.List;
 
 public class SearchClient extends Fragment {
 
@@ -27,7 +28,7 @@ public class SearchClient extends Fragment {
     Button button;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         int orientation = getResources().getConfiguration().orientation;
@@ -51,7 +52,7 @@ public class SearchClient extends Fragment {
         client_search_id_view = view.findViewById(R.id.client_search_id_view);
         button = view.findViewById(R.id.client_fragment_search_button);
         button.setOnClickListener((View.OnClickListener) v -> {
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
 
@@ -80,6 +81,7 @@ public class SearchClient extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void displayClientDetails(Client client, View view) {
         String name = client.getName();
         String lastname = client.getLastname();
@@ -94,7 +96,7 @@ public class SearchClient extends Fragment {
         client_search_name_view.setText("Πελάτης: " + name + " " + lastname);
         client_search_id_view.setText("Αναγνωριστικό: " + id);
 
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         Toast.makeText(getActivity(), "Ο πελάτης βρέθηκε", Toast.LENGTH_LONG).show();
@@ -108,7 +110,7 @@ public class SearchClient extends Fragment {
         client_search_id.setText("");
         client_search_phone.setText("");
 
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         Toast.makeText(getActivity(),"Δε βρέθηκε πελάτης",Toast.LENGTH_LONG).show();
