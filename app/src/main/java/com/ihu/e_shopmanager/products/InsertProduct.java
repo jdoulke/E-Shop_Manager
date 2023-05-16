@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -28,7 +29,7 @@ public class InsertProduct extends Fragment {
     public InsertProduct(){}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view;
@@ -51,7 +52,7 @@ public class InsertProduct extends Fragment {
         button.setOnClickListener(v -> {
             Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = -1;
+            int id;
             try {
                 id = Integer.parseInt(product_id.getText().toString());
             } catch (NumberFormatException ex) {
@@ -68,14 +69,14 @@ public class InsertProduct extends Fragment {
                 Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή της κατηγορίας. ",Toast.LENGTH_LONG).show();
                 return;
             }
-            int stock = -1;
+            int stock;
             try {
                 stock = Integer.parseInt(product_stock.getText().toString());
             } catch (NumberFormatException ex) {
                 Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του αποθέματος. ",Toast.LENGTH_LONG).show();
                 return;
             }
-            float price = -1;
+            float price;
             try {
                 price = Float.parseFloat(product_price.getText().toString());
             } catch (NumberFormatException ex) {
@@ -83,18 +84,16 @@ public class InsertProduct extends Fragment {
                 return;
             }
             try {
-                if(id != -1 && stock != -1 && price != -1) {
-                    Product product = new Product();
-                    product.setId(id);
-                    product.setName(name);
-                    product.setCategory(category);
-                    product.setStock(stock);
-                    product.setPrice(price);
-                    MainActivity.myAppDatabase.myDao().insertProduct(product);
-                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    Toast.makeText(getActivity(), "To προϊόν προστέθηκε.", Toast.LENGTH_LONG).show();
-                }
+                Product product = new Product();
+                product.setId(id);
+                product.setName(name);
+                product.setCategory(category);
+                product.setStock(stock);
+                product.setPrice(price);
+                MainActivity.myAppDatabase.myDao().insertProduct(product);
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                Toast.makeText(getActivity(), "To προϊόν προστέθηκε.", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του προϊόντος. ",Toast.LENGTH_LONG).show();
             }

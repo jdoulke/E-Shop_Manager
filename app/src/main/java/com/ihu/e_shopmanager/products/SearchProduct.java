@@ -1,5 +1,6 @@
 package com.ihu.e_shopmanager.products;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -27,7 +29,7 @@ public class SearchProduct extends Fragment {
     Button button;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view;
         int orientation = getResources().getConfiguration().orientation;
@@ -49,7 +51,7 @@ public class SearchProduct extends Fragment {
         product_search_category_view = view.findViewById(R.id.product_search_category_view);
         button = view.findViewById(R.id.product_search_button);
         button.setOnClickListener(v -> {
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
             List<Product> products = MainActivity.myAppDatabase.myDao().getProducts();
@@ -72,6 +74,7 @@ public class SearchProduct extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void displayProductDetails(Product product, View view) {
         String name = product.getName();
         String category = product.getCategory();
@@ -86,7 +89,7 @@ public class SearchProduct extends Fragment {
         product_search_name_view.setText("Προϊόν: " + name);
         product_search_id_view.setText("Αναγνωριστικό: " + id);
 
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         Toast.makeText(getActivity(), "To προϊόν βρέθηκε", Toast.LENGTH_LONG).show();
@@ -100,7 +103,7 @@ public class SearchProduct extends Fragment {
         product_search_name_view.setText("Προϊόν: ");
         product_search_id_view.setText("Αναγνωριστικό: ");
 
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         Toast.makeText(getActivity(),"Δε βρέθηκε προϊόν",Toast.LENGTH_LONG).show();

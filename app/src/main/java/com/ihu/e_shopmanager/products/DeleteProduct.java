@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
 import com.ihu.e_shopmanager.R;
-import com.ihu.e_shopmanager.clients.Client;
+
 
 public class DeleteProduct extends Fragment {
 
@@ -42,9 +42,9 @@ public class DeleteProduct extends Fragment {
         editText = view.findViewById(R.id.product_delete_id);
         button = view.findViewById(R.id.product_remove_button);
         button.setOnClickListener(v -> {
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            int id = 0;
+            int id;
             try {
                 id = Integer.parseInt(editText.getText().toString());
             } catch (NumberFormatException ex) {
@@ -54,7 +54,7 @@ public class DeleteProduct extends Fragment {
             Product product = new Product();
             product.setId(id);
             MainActivity.myAppDatabase.myDao().deleteProduct(product);
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             Toast.makeText(getActivity(),"To προϊόν αφαιρέθηκε.",Toast.LENGTH_LONG).show();
             editText.setText("");

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -36,7 +37,7 @@ public class UpdateProduct extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view;
@@ -111,7 +112,7 @@ public class UpdateProduct extends Fragment {
         button = view.findViewById(R.id.product_update_button);
         button.setOnClickListener(v -> {
 
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
             try {
@@ -131,10 +132,10 @@ public class UpdateProduct extends Fragment {
 
                 MainActivity.myAppDatabase.myDao().updateProduct(product);
 
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-                Toast.makeText(getActivity(),"Τα στοιχεία ενημερώθηκαν",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Τα στοιχεία ενημερώθηκαν.",Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 String message = e.getMessage();
                 Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
