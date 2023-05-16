@@ -49,6 +49,7 @@ public class DeleteProduct extends Fragment {
                 id = Integer.parseInt(editText.getText().toString());
             } catch (NumberFormatException ex) {
                 Toast.makeText(getActivity(),"Σφάλμα στην εισαγωγή του ID.",Toast.LENGTH_LONG).show();
+                return;
             }
             Product product = new Product();
             product.setId(id);
