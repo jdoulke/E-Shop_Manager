@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,15 +93,17 @@ public class CompletionOfOrder extends Fragment {
                         dateView.setText(" Ημερομηνία Παραγγελίας: ");
                         order_id_view.setText(" Παραγγελία: ");
                         order_total_price_view.setText(" Σύνολο: 0€");
+                        Log.d("Test", "order is null");
                         return;
                     }
 
-                    Client client = MainActivity.myAppDatabase.myDao().getClientFromOrder(order.getClientId());
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromOrder(orderID);
                     if (client == null) {
                         order_client_view.setText(" Πελάτης: ");
                         dateView.setText(" Ημερομηνία Παραγγελίας: ");
                         order_id_view.setText(" Παραγγελία: ");
                         order_total_price_view.setText(" Σύνολο: 0€");
+                        Log.d("Test", "client is null");
                         return;
                     }
 
