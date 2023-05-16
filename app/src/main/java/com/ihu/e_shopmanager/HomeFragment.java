@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -37,13 +38,13 @@ import java.util.Set;
 
 public class HomeFragment extends Fragment {
 
-    private List<Sale> sales = new ArrayList<>();
+    private final List<Sale> sales = new ArrayList<>();
     HashMap<Integer, Client> clientMap = new HashMap<>();
     HashMap<Integer, Product> productMap = new HashMap<>();
 
     private CollectionReference salesReference;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view;
         int orientation = getResources().getConfiguration().orientation;
@@ -202,7 +203,7 @@ public class HomeFragment extends Fragment {
                 bestClient.setText("Καλύτερος Πελάτης: " + client.getName() + " " + client.getLastname());
                 bestProduct.setText("Δημοφιλέστερο Προϊόν: " + product.getName());
             }
-            String formattedPrice = String.format("%.2f", totalPrice);
+            @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", totalPrice);
             turnover.setText("Συνολικός Τζίρος: "+ formattedPrice + "€");
         }).addOnFailureListener(e -> {
             Log.d("FireStore ERROR: ", e.getMessage());
@@ -231,7 +232,7 @@ public class HomeFragment extends Fragment {
                 Query query1 = salesReference.whereEqualTo("sale_date", "08/05/2023");
                 linearLayout.removeAllViews();
                 query1.get().addOnSuccessListener(queryDocumentSnapshots -> {
-                    View headerView = inflater.inflate(R.layout.order_list_item, null);
+                    @SuppressLint("InflateParams") View headerView = inflater.inflate(R.layout.order_list_item, null);
                     TextView idTextView = headerView.findViewById(R.id.order_child_id);
                     TextView clientNameTextView = headerView.findViewById(R.id.order_child_client_name);
                     TextView priceTextView = headerView.findViewById(R.id.order_child_total_price);
@@ -243,7 +244,7 @@ public class HomeFragment extends Fragment {
                     linearLayout.addView(headerView);
                     for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                         Sale sale = documentSnapshot.toObject(Sale.class);
-                        View saleView = inflater.inflate(R.layout.order_list_item, null);
+                        @SuppressLint("InflateParams") View saleView = inflater.inflate(R.layout.order_list_item, null);
                         idTextView = saleView.findViewById(R.id.order_child_id);
                         clientNameTextView = saleView.findViewById(R.id.order_child_client_name);
                         priceTextView = saleView.findViewById(R.id.order_child_total_price);
@@ -251,8 +252,9 @@ public class HomeFragment extends Fragment {
 
                         idTextView.setText(String.valueOf(sale.getSale_id()));
                         Client client = clientMap.get(sale.getClient_id());
+                        assert client != null;
                         clientNameTextView.setText(client.getName() + " " + client.getLastname());
-                        String formattedPrice = String.format("%.2f", sale.getValue());
+                        @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", sale.getValue());
                         priceTextView.setText(formattedPrice + "€");
                         dateTextView.setText(String.valueOf(sale.getSale_date()));
                         linearLayout.addView(saleView);
@@ -264,7 +266,7 @@ public class HomeFragment extends Fragment {
                 Query query2 = salesReference.whereGreaterThan("value", 2000);
                 linearLayout.removeAllViews();
                 query2.get().addOnSuccessListener(queryDocumentSnapshots -> {
-                    View headerView = inflater.inflate(R.layout.order_list_item, null);
+                    @SuppressLint("InflateParams") View headerView = inflater.inflate(R.layout.order_list_item, null);
                     TextView idTextView = headerView.findViewById(R.id.order_child_id);
                     TextView clientNameTextView = headerView.findViewById(R.id.order_child_client_name);
                     TextView priceTextView = headerView.findViewById(R.id.order_child_total_price);
@@ -272,11 +274,11 @@ public class HomeFragment extends Fragment {
                     idTextView.setText("ID");
                     clientNameTextView.setText("Πελάτης");
                     priceTextView.setText("Αξία");
-                    dateTextView.setText("Ημ/νια Πώλησεις");
+                    dateTextView.setText("Ημ/νια Πώλησης");
                     linearLayout.addView(headerView);
                     for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                         Sale sale = documentSnapshot.toObject(Sale.class);
-                        View saleView = inflater.inflate(R.layout.order_list_item, null);
+                        @SuppressLint("InflateParams") View saleView = inflater.inflate(R.layout.order_list_item, null);
                         idTextView = saleView.findViewById(R.id.order_child_id);
                         clientNameTextView = saleView.findViewById(R.id.order_child_client_name);
                         priceTextView = saleView.findViewById(R.id.order_child_total_price);
@@ -284,8 +286,9 @@ public class HomeFragment extends Fragment {
 
                         idTextView.setText(String.valueOf(sale.getSale_id()));
                         Client client = clientMap.get(sale.getClient_id());
+                        assert client != null;
                         clientNameTextView.setText(client.getName() + " " + client.getLastname());
-                        String formattedPrice = String.format("%.2f", sale.getValue());
+                        @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", sale.getValue());
                         priceTextView.setText(formattedPrice + "€");
                         dateTextView.setText(String.valueOf(sale.getSale_date()));
                         linearLayout.addView(saleView);
@@ -338,7 +341,7 @@ public class HomeFragment extends Fragment {
                 idTextView3.setText("ID");
                 clientNameTextView3.setText("Πελάτης");
                 priceTextView3.setText("Αξία");
-                dateTextView3.setText("Ημ/νια Πώλησεις");
+                dateTextView3.setText("Ημ/νια Πώλησης");
                 linearLayout.addView(headerView3);
                 for(Order order : ordersQuery){
                     View orderView = inflater.inflate(R.layout.order_list_item, null);
@@ -367,7 +370,7 @@ public class HomeFragment extends Fragment {
                 idTextView4.setText("ID");
                 clientNameTextView4.setText("Πελάτης");
                 priceTextView4.setText("Αξία");
-                dateTextView4.setText("Ημ/νια Πώλησεις");
+                dateTextView4.setText("Ημ/νια Πώλησης");
                 linearLayout.addView(headerView4);
                 for(Order order : ordersQuery4){
                     View orderView = inflater.inflate(R.layout.order_list_item, null);

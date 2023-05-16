@@ -3,21 +3,16 @@ package com.ihu.e_shopmanager;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -41,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static EshopDatabase myAppDatabase;
 
+    @SuppressLint("StaticFieldLeak")
     public static FirebaseFirestore firestoreDatabase;
     public static FragmentManager fragmentManager;
     ClientsFragment clientsFragment = new ClientsFragment();
@@ -130,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence channelName = "My Channel";
