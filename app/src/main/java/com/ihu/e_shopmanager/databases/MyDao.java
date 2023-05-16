@@ -52,6 +52,9 @@ public interface MyDao {
 
     @Query("Select * From product where product_id = :product_id")
     Product getProductFromId(int product_id);
+
+    @Query("Select * From `order` where order_id = :order_id")
+    Order getOrderFromId(int order_id);
     @Query("SELECT * FROM Product WHERE category = :category")
     List<Product> getProductsInCategory(String category);
 

@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -25,19 +25,16 @@ import com.ihu.e_shopmanager.clients.Client;
 import com.ihu.e_shopmanager.products.Product;
 import com.ihu.e_shopmanager.products.ProductWithQuantity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class DeleteOrder extends Fragment {
 
 
-    private HashMap<Integer, Order> orderMap = new HashMap<>();
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view;
         int orientation = getResources().getConfiguration().orientation;
@@ -51,12 +48,6 @@ public class DeleteOrder extends Fragment {
         TextView toolbarText = requireActivity().findViewById(R.id.toolbar_string);
         toolbarText.setText("Παραγγελίες");
 
-        List<Order> orders = MainActivity.myAppDatabase.myDao().getOrders();
-
-
-        for(Order order : orders){
-            orderMap.put(order.getId(), order);
-        }
 
         registerListeners(view);
 
@@ -97,7 +88,7 @@ public class DeleteOrder extends Fragment {
                     order_total_price_view.setText(" Σύνολο: 0€");
                 } else {
                     int orderID = parseInt(s.toString());
-                    Order order = orderMap.get(orderID);
+                    Order order = MainActivity.myAppDatabase.myDao().getOrderFromId(orderID);
 
                     if (order == null) {
                         order_client_view.setText(" Πελάτης: ");
@@ -119,7 +110,7 @@ public class DeleteOrder extends Fragment {
                     order_client_view.setText(" Πελάτης: " + client.getName() + " " + client.getLastname());
                     dateView.setText(" Ημερομηνία Παραγγελίας: " + order.getOrderDate());
                     order_id_view.setText(" Παραγγελία: " + orderID);
-                    String formattedPrice = String.format("%.2f", order.getTotalPrice());
+                    @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", order.getTotalPrice());
                     order_total_price_view.setText(" Σύνολο: " + formattedPrice + "€");
 
                 }
@@ -132,7 +123,7 @@ public class DeleteOrder extends Fragment {
             vibrator.vibrate(40);
 
             int id = parseInt(order_search_order_id.getText().toString());
-            Order order = orderMap.get(id);
+            Order order = MainActivity.myAppDatabase.myDao().getOrderFromId(id);
             if(order != null) {
                 List<ProductWithQuantity> productWithQuantity = order.getProducts();
                 for(ProductWithQuantity productWithQuantity1 : productWithQuantity){
@@ -141,11 +132,11 @@ public class DeleteOrder extends Fragment {
                     MainActivity.myAppDatabase.myDao().updateProduct(product);
                 }
                 MainActivity.myAppDatabase.myDao().deleteOrder(order);
-                Toast.makeText(getActivity(), "Η παραγγελία αφαιρέθηκε ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Η παραγγελία αφαιρέθηκε.", Toast.LENGTH_LONG).show();
             }else
-                Toast.makeText(getActivity(), "Δε βρέθηκε παραγγελία ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Δε βρέθηκε παραγγελία.", Toast.LENGTH_LONG).show();
 
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
             order_client_view.setText(" Πελάτης: ");

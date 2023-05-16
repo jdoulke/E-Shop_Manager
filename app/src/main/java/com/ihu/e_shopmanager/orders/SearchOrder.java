@@ -1,5 +1,6 @@
 package com.ihu.e_shopmanager.orders;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ihu.e_shopmanager.MainActivity;
@@ -28,21 +30,16 @@ import com.ihu.e_shopmanager.products.Product;
 import com.ihu.e_shopmanager.products.ProductWithQuantity;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class SearchOrder extends Fragment {
 
-    private Set<String> orders = new HashSet<>();
 
-    private HashMap<Integer, Product> productHashMap = new HashMap<>();
-    private HashMap<Integer, Client> clientIDMap = new HashMap<>();
-    private HashMap<Long, Client> clientPhoneMap = new HashMap<>();
-    private HashMap<Integer, Order> orderMap = new HashMap<>();
 
+
+    @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         int orientation = getResources().getConfiguration().orientation;
 
@@ -71,23 +68,7 @@ public class SearchOrder extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
 
-        List<Product> products = MainActivity.myAppDatabase.myDao().getProducts();
-        List<Client> clients = MainActivity.myAppDatabase.myDao().getClients();
-        List<Order> orders = MainActivity.myAppDatabase.myDao().getOrders();
-
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-
-
-
-        for(Product product : products)
-            productHashMap.put(product.getId(), product);
-        for (Client client : clients) {
-            clientIDMap.put(client.getId(), client);
-            clientPhoneMap.put(client.getPhone_number(), client);
-        }
-        for(Order order : orders)
-            orderMap.put(order.getId(), order);
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         order_search_linearlayout.addView(headerViews(inflater));
 
@@ -95,13 +76,13 @@ public class SearchOrder extends Fragment {
 
         order_search_button.setOnClickListener(v -> {
 
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
 
             if(!order_search_order_id.getText().toString().isEmpty()){
 
                 int id = parseInt(order_search_order_id.getText().toString());
-                Order order = orderMap.get(id);
+                Order order = MainActivity.myAppDatabase.myDao().getOrderFromId(id);
 
                 if(order == null){
                     Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία",Toast.LENGTH_LONG).show();
@@ -118,8 +99,8 @@ public class SearchOrder extends Fragment {
                 List<ProductWithQuantity> productWithQuantities = order.getProducts();
                 dateView.setText(" Ημερομηνία Παραγγελίας: " + order.getOrderDate());
                 for(ProductWithQuantity productWithQuantity : productWithQuantities) {
-                    View productView = inflater.inflate(R.layout.order_search_item, null);
-                    Product product = productHashMap.get(productWithQuantity.getProduct().getId());
+                    @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_search_item, null);
+                    Product product = productWithQuantity.getProduct();
                     if(product != null) {
                         TextView idView = productView.findViewById(R.id.order_search_child_id);
                         TextView nameView = productView.findViewById(R.id.order_search_child_name);
@@ -138,12 +119,12 @@ public class SearchOrder extends Fragment {
                         order_search_linearlayout.addView(productView);
                     }
                 }
-                String formattedPrice = String.format("%.2f", order.getTotalPrice());
+                @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", order.getTotalPrice());
                 order_search_price_view.setText(" Σύνολο: " + formattedPrice + "€");
 
             }else if(!order_search_client_id.getText().toString().isEmpty()){
                 int id = parseInt(order_search_client_id.getText().toString());
-                Client client = clientIDMap.get(id);
+                Client client = MainActivity.myAppDatabase.myDao().getClientFromId(id);
 
                 if(client == null){
                     Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία",Toast.LENGTH_LONG).show();
@@ -161,8 +142,8 @@ public class SearchOrder extends Fragment {
                     List<ProductWithQuantity> productWithQuantities = firstOrder.getProducts();
                     dateView.setText(" Ημερομηνία Παραγγελίας: " + firstOrder.getOrderDate());
                     for(ProductWithQuantity productWithQuantity : productWithQuantities) {
-                        View productView = inflater.inflate(R.layout.order_search_item, null);
-                        Product product = productHashMap.get(productWithQuantity.getProduct().getId());
+                        @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_search_item, null);
+                        Product product = productWithQuantity.getProduct();
                         if(product != null) {
                             TextView idView = productView.findViewById(R.id.order_search_child_id);
                             TextView nameView = productView.findViewById(R.id.order_search_child_name);
@@ -181,7 +162,7 @@ public class SearchOrder extends Fragment {
                             order_search_linearlayout.addView(productView);
                         }
                     }
-                    String formattedPrice = String.format("%.2f", firstOrder.getTotalPrice());
+                    @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", firstOrder.getTotalPrice());
                     order_search_price_view.setText(" Σύνολο: " + formattedPrice + "€");
                     HashMap<Integer, Order> orderList = new HashMap<>();
                     for(Order order : clientOrders) {
@@ -202,8 +183,8 @@ public class SearchOrder extends Fragment {
                                 List<ProductWithQuantity> productWithQuantities = clientOrder.getProducts();
                                 dateView.setText(" Ημερομηνία Παραγγελίας: " + clientOrder.getOrderDate());
                                 for (ProductWithQuantity productWithQuantity : productWithQuantities) {
-                                    View productView = inflater.inflate(R.layout.order_search_item, null);
-                                    Product product = productHashMap.get(productWithQuantity.getProduct().getId());
+                                    @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_search_item, null);
+                                    Product product = productWithQuantity.getProduct();
                                     if (product != null) {
                                         TextView idView = productView.findViewById(R.id.order_search_child_id);
                                         TextView nameView = productView.findViewById(R.id.order_search_child_name);
@@ -222,7 +203,7 @@ public class SearchOrder extends Fragment {
                                         order_search_linearlayout.addView(productView);
                                     }
                                 }
-                                String formattedPrice = String.format("%.2f", clientOrder.getTotalPrice());
+                                @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", clientOrder.getTotalPrice());
                                 order_search_price_view.setText(" Σύνολο: " + formattedPrice + "€");
                             }
                         }
@@ -241,7 +222,7 @@ public class SearchOrder extends Fragment {
 
             }else if(!order_search_client_phone.getText().toString().isEmpty()){
                 long number = parseLong(order_search_client_phone.getText().toString());
-                Client client = clientPhoneMap.get(number);
+                Client client = MainActivity.myAppDatabase.myDao().getClientFromPhone(number);
 
                 if(client == null){
                     Toast.makeText(getActivity(),"Δε βρέθηκε παραγγελία",Toast.LENGTH_LONG).show();
@@ -252,14 +233,14 @@ public class SearchOrder extends Fragment {
                 adapter.clear();
                 order_search_linearlayout.removeAllViews();
                 order_search_linearlayout.addView(headerViews(inflater));
-                List<Order> clientOrders = MainActivity.myAppDatabase.myDao().getClientOrdersFromPhoneNumber(client.getPhone_number());
+                List<Order> clientOrders = MainActivity.myAppDatabase.myDao().getClientOrdersFromPhoneNumber(number);
                 if(clientOrders.size() > 0){
                     Order firstOrder = clientOrders.get(0);
                     List<ProductWithQuantity> productWithQuantities = firstOrder.getProducts();
                     dateView.setText(" Ημερομηνία Παραγγελίας: " + firstOrder.getOrderDate());
                     for(ProductWithQuantity productWithQuantity : productWithQuantities) {
-                        View productView = inflater.inflate(R.layout.order_search_item, null);
-                        Product product = productHashMap.get(productWithQuantity.getProduct().getId());
+                        @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_search_item, null);
+                        Product product = productWithQuantity.getProduct();
                         if(product != null) {
                             TextView idView = productView.findViewById(R.id.order_search_child_id);
                             TextView nameView = productView.findViewById(R.id.order_search_child_name);
@@ -278,7 +259,7 @@ public class SearchOrder extends Fragment {
                             order_search_linearlayout.addView(productView);
                         }
                     }
-                    String formattedPrice = String.format("%.2f", firstOrder.getTotalPrice());
+                    @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", firstOrder.getTotalPrice());
                     order_search_price_view.setText("Σύνολο: " + formattedPrice + "€");
                     HashMap<Integer, Order> orderList = new HashMap<>();
                     for(Order order : clientOrders) {
@@ -299,8 +280,8 @@ public class SearchOrder extends Fragment {
                                 List<ProductWithQuantity> productWithQuantities = clientOrder.getProducts();
                                 dateView.setText(" Ημερομηνία Παραγγελίας: " + clientOrder.getOrderDate());
                                 for (ProductWithQuantity productWithQuantity : productWithQuantities) {
-                                    View productView = inflater.inflate(R.layout.order_search_item, null);
-                                    Product product = productHashMap.get(productWithQuantity.getProduct().getId());
+                                    @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_search_item, null);
+                                    Product product = productWithQuantity.getProduct();
                                     if (product != null) {
                                         TextView idView = productView.findViewById(R.id.order_search_child_id);
                                         TextView nameView = productView.findViewById(R.id.order_search_child_name);
@@ -319,7 +300,7 @@ public class SearchOrder extends Fragment {
                                         order_search_linearlayout.addView(productView);
                                     }
                                 }
-                                String formattedPrice = String.format("%.2f", clientOrder.getTotalPrice());
+                                @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", clientOrder.getTotalPrice());
                                 order_search_price_view.setText(" Σύνολο: " + formattedPrice + "€");
                             }
                         }
@@ -390,19 +371,21 @@ public class SearchOrder extends Fragment {
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
                     client_view.setText(" Πελάτης: ");
                 } else {
                     int id = parseInt(s.toString());
-                    Order order = orderMap.get(id);
+                    Order order = MainActivity.myAppDatabase.myDao().getOrderFromId(id);
 
                     if(order == null){
                         client_view.setText(" Πελάτης: ");
                         return;
                     }
-                    Client client = clientIDMap.get(order.getClientId());
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromId(order.getClientId());
+                    assert client != null;
                     client_view.setText(" Πελάτης: " + client.getName() + " " + client.getLastname());
                 }
             }
@@ -419,13 +402,14 @@ public class SearchOrder extends Fragment {
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
                     client_view.setText(" Πελάτης: ");
                 } else {
                     int id = parseInt(s.toString());
-                    Client client = clientIDMap.get(id);
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromId(id);
 
                     if(client == null){
                         client_view.setText(" Πελάτης: ");
@@ -448,13 +432,14 @@ public class SearchOrder extends Fragment {
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
                     client_view.setText(" Πελάτης: ");
                 } else {
                     long phone_number = parseLong(s.toString());
-                    Client client = clientPhoneMap.get(phone_number);
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromPhone(phone_number);
 
                     if(client == null){
                         client_view.setText(" Πελάτης: ");
@@ -467,9 +452,10 @@ public class SearchOrder extends Fragment {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private View headerViews(LayoutInflater inflater) {
 
-        View headerView = inflater.inflate(R.layout.order_search_item, null);
+        @SuppressLint("InflateParams") View headerView = inflater.inflate(R.layout.order_search_item, null);
         TextView idTextView = headerView.findViewById(R.id.order_search_child_id);
         TextView nameTextView = headerView.findViewById(R.id.order_search_child_name);
         TextView categoryTextView = headerView.findViewById(R.id.order_search_child_category);

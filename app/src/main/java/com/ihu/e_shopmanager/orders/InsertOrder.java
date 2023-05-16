@@ -1,6 +1,7 @@
 package com.ihu.e_shopmanager.orders;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -21,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -42,14 +44,15 @@ import java.util.Set;
 
 public class InsertOrder extends Fragment {
 
-    private Set<String> productCategories = new HashSet<>();
-    private Set<String> productFromCategory = new HashSet<>();
+    private final Set<String> productCategories = new HashSet<>();
+    private final Set<String> productFromCategory = new HashSet<>();
 
     private int notificationId = 1;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view;
         int orientation = getResources().getConfiguration().orientation;
@@ -115,6 +118,7 @@ public class InsertOrder extends Fragment {
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
@@ -158,8 +162,9 @@ public class InsertOrder extends Fragment {
             vibrator.vibrate(40);
             String selectedProduct = productSpinner.getSelectedItem().toString();
             Product product = productHashMap.get(selectedProduct);
+            assert product != null;
             if(product.getStock() >= parseInt(quantity.getText().toString())) {
-                View productView = inflater.inflate(R.layout.order_item, null);
+                @SuppressLint("InflateParams") View productView = inflater.inflate(R.layout.order_item, null);
                 TextView idView = productView.findViewById(R.id.order_child_id);
                 TextView nameView = productView.findViewById(R.id.order_child_name);
                 TextView categoryView = productView.findViewById(R.id.order_child_category);
@@ -184,7 +189,7 @@ public class InsertOrder extends Fragment {
                 for (ProductWithQuantity product1 : productWithQuantities) {
                     totalPrice += product1.getQuantity() * product1.getProduct().getPrice();
                 }
-                String formattedPrice = String.format("%.2f", totalPrice);
+                @SuppressLint("DefaultLocale") String formattedPrice = String.format("%.2f", totalPrice);
                 totalPriceView.setText("Σύνολο: " + formattedPrice + "€");
                 product.setStock(product.getStock() - parseInt(quantity.getText().toString()));
                 MainActivity.myAppDatabase.myDao().updateProduct(product);
@@ -201,7 +206,7 @@ public class InsertOrder extends Fragment {
         });
 
         addOrderButton.setOnClickListener(v -> {
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
             Order order = new Order();
             int orderId = parseInt(order_id.getText().toString());
@@ -211,7 +216,7 @@ public class InsertOrder extends Fragment {
                 totalPrice += product1.getQuantity() * product1.getProduct().getPrice();
             }
             Date currentDate = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String formattedDate = dateFormat.format(currentDate);
             try {
                 order.setOrderDate(formattedDate);
@@ -220,7 +225,7 @@ public class InsertOrder extends Fragment {
                 order.setTotalPrice(totalPrice);
                 order.setProducts(productWithQuantities);
                 MainActivity.myAppDatabase.myDao().insertOrder(order);
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 Toast.makeText(getActivity(),"Η παραγγελία δημιουργήθηκε.",Toast.LENGTH_LONG).show();
             } catch (Exception e) {
@@ -239,9 +244,10 @@ public class InsertOrder extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private View headerViews(LayoutInflater inflater) {
 
-        View headerView = inflater.inflate(R.layout.order_item, null);
+        @SuppressLint("InflateParams") View headerView = inflater.inflate(R.layout.order_item, null);
         TextView idTextView = headerView.findViewById(R.id.order_child_id);
         TextView nameTextView = headerView.findViewById(R.id.order_child_name);
         TextView categoryTextView = headerView.findViewById(R.id.order_child_category);
@@ -266,15 +272,15 @@ public class InsertOrder extends Fragment {
     }
 
     private void showNotification(String notificationTitle, String notificationDescription) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireActivity(), "channel_id")
                 .setSmallIcon(R.drawable.store)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationDescription)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         // Display the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
