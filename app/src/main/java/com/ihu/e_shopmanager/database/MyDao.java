@@ -105,4 +105,8 @@ public interface MyDao {
     @Query("SELECT * FROM `client` WHERE client_id IN (SELECT DISTINCT client_id FROM `order` WHERE `order`.total_price > 2500)")
     List<Client> getQuery7();
 
+    @Query("SELECT * FROM `order` WHERE client_id NOT IN (SELECT client_id FROM client WHERE name = 'Κώστας')")
+    List<Order> getQuery8();
+
+
 }

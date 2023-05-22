@@ -68,6 +68,8 @@ public class HomeFragment extends Fragment {
         adapter.add("Προϊόντα στην κατηγορία Laptop");
         adapter.add("Πελάτες με Παραγγελίες άνω των 2500€");
         adapter.add("Πελάτες που έχουν παραγγείλει κάποιο Desktop");
+        adapter.add("Παραγγελίες που δεν έχουν όνομα Κώστας");
+        adapter.add("Παραγγελίες του Λιγκουίνη με αξία άνω των 700€");
         infoSpinner.setAdapter(adapter);
         salesReference = MainActivity.firestoreDatabase.collection("Sales");
         infoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -527,6 +529,36 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     }
+                }
+                break;
+            case 9:
+                List<Order> orderQuery9 = MainActivity.myAppDatabase.myDao().getQuery8();
+                linearLayout.removeAllViews();
+                View headerView9 = inflater.inflate(R.layout.order_list_item, null);
+                TextView idTextView9 = headerView9.findViewById(R.id.order_child_id);
+                TextView clientNameTextView9 = headerView9.findViewById(R.id.order_child_client_name);
+                TextView priceTextView9 = headerView9.findViewById(R.id.order_child_total_price);
+                TextView dateTextView9 = headerView9.findViewById(R.id.order_child_date);
+                idTextView9.setText("ID");
+                clientNameTextView9.setText("Πελάτης");
+                priceTextView9.setText("Αξία");
+                dateTextView9.setText("Ημ/νια Πώλησης");
+                linearLayout.addView(headerView9);
+                for(Order order : orderQuery9){
+                    Client client = MainActivity.myAppDatabase.myDao().getClientFromId(order.getClientId());
+                    assert client != null;
+                    View orderView = inflater.inflate(R.layout.order_list_item, null);
+                    idTextView3 = orderView.findViewById(R.id.order_child_id);
+                    clientNameTextView3 = orderView.findViewById(R.id.order_child_client_name);
+                    priceTextView3 = orderView.findViewById(R.id.order_child_total_price);
+                    dateTextView3 = orderView.findViewById(R.id.order_child_date);
+
+                    idTextView3.setText(String.valueOf(order.getId()));
+                    clientNameTextView3.setText(client.getName() + " " + client.getLastname());
+                    String formattedPrice = String.format("%.2f", order.getTotalPrice());
+                    priceTextView3.setText(formattedPrice + "€");
+                    dateTextView3.setText(String.valueOf(order.getOrderDate()));
+                    linearLayout.addView(orderView);
                 }
                 break;
         }
